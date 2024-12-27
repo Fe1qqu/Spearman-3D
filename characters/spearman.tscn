@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://co8elsodva3xg"]
+
+[ext_resource type="PackedScene" uid="uid://goexc3502ld8" path="res://models/spearman.glb" id="1_tsmym"]
+[ext_resource type="Script" path="res://characters/spearman.gd" id="1_yo08e"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wg2j7"]
+
+[node name="Spearman" type="CharacterBody3D"]
+script = ExtResource("1_yo08e")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.566127, 1.72926, 0)
+fov = 103.595
+
+[node name="Mesh" parent="." instance=ExtResource("1_tsmym")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_wg2j7")
