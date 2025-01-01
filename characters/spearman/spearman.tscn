@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://co8elsodva3xg"]
+
+[ext_resource type="PackedScene" uid="uid://cuxnfxaa43scn" path="res://characters/spearman/spearman.glb" id="1_tsmym"]
+[ext_resource type="Script" path="res://characters/spearman/spearman.gd" id="1_yo08e"]
+[ext_resource type="PackedScene" uid="uid://cq21cvvwewgn7" path="res://characters/spearman/spear.tscn" id="3_j2777"]
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="4_pwymq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wg2j7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lq7ht"]
+
+[node name="Spearman" type="CharacterBody3D"]
+script = ExtResource("1_yo08e")
+
+[node name="Hud" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextEdit" type="TextEdit" parent="Hud"]
+layout_mode = 0
+offset_left = 991.0
+offset_top = 64.0
+offset_right = 1081.0
+offset_bottom = 104.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_wg2j7")
+
+[node name="Mesh" parent="." instance=ExtResource("1_tsmym")]
+
+[node name="Spear" parent="." instance=ExtResource("3_j2777")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.566127, 1.72926, 0)
+fov = 103.595
+
+[node name="HurtBox" type="Area3D" parent="."]
+monitorable = false
+script = ExtResource("4_pwymq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 1.06138, 0)
+shape = SubResource("CapsuleShape3D_lq7ht")

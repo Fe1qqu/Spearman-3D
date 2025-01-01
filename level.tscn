@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://btlserpolr4kt"]
 
-[ext_resource type="PackedScene" uid="uid://co8elsodva3xg" path="res://characters/spearman.tscn" id="1_q0v45"]
+[ext_resource type="PackedScene" uid="uid://co8elsodva3xg" path="res://characters/spearman/spearman.tscn" id="1_q0v45"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qrvsd"]
 albedo_color = Color(0.299547, 0.299547, 0.299547, 1)
@@ -14,10 +14,10 @@ data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0
 [node name="Level" type="Node3D"]
 
 [node name="Spearman" parent="." instance=ExtResource("1_q0v45")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.252107, 0, 0.98545)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.67743, 0, 0.98545)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, -0.5, 0)
+transform = Transform3D(30, 0, 0, 0, 1, 0, 0, 0, 30, 0, -0.5, 0)
 mesh = SubResource("BoxMesh_lwtp5")
 skeleton = NodePath("")
 
@@ -28,6 +28,12 @@ shape = SubResource("ConcavePolygonShape3D_8y8sb")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4.89702, 0)
-light_energy = 10.0
-spot_range = 12.1741
-spot_angle = 44.1336
+light_energy = 5.848
+spot_range = 35.63
+spot_attenuation = 0.19
+spot_angle = 80.53
+spot_angle_attenuation = 0.00704101
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.518176, 0, -0.855274, 0, 1, 0, 0.855274, 0, -0.518176, 0, 1.52156, -6.91939)
+fov = 113.5
