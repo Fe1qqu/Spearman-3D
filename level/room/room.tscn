@@ -1,0 +1,125 @@
+[gd_scene load_steps=13 format=3 uid="uid://bmbb35ck2knhe"]
+
+[ext_resource type="Script" path="res://level/room/room.gd" id="1_4vhi3"]
+[ext_resource type="PackedScene" uid="uid://co8elsodva3xg" path="res://characters/spearman/spearman.tscn" id="1_qwxw8"]
+[ext_resource type="Texture2D" uid="uid://c6aebm3j2qqr2" path="res://level/room/door_opened.bmp" id="2_fgbq6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_643gk"]
+size = Vector3(20, 1, 20)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jav7h"]
+points = PackedVector3Array(-10, -0.5, -10, -10, 0.5, -10, 10, -0.5, -10, -10, -0.5, 10, -10, 0.5, 10, 10, 0.5, -10, 10, -0.5, 10, 10, 0.5, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_yapy4"]
+points = PackedVector3Array(-10, -0.5, -10, -10, 0.5, -10, 10, -0.5, -10, -10, -0.5, 10, -10, 0.5, 10, 10, 0.5, -10, 10, -0.5, 10, 10, 0.5, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_52wal"]
+size = Vector3(9.5, 1, 20)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_du7yl"]
+points = PackedVector3Array(4.75, 0.5, 10, 4.75, -0.5, 10, 4.75, 0.5, -10, -4.75, 0.5, 10, -4.75, -0.5, 10, 4.75, -0.5, -10, -4.75, 0.5, -10, -4.75, -0.5, -10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_1vljt"]
+points = PackedVector3Array(4.75, 0.5, 10, 4.75, -0.5, 10, 4.75, 0.5, -10, -4.75, 0.5, 10, -4.75, -0.5, 10, 4.75, -0.5, -10, -4.75, 0.5, -10, -4.75, -0.5, -10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5qkmd"]
+size = Vector3(9.5, 1, 22)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_yitjl"]
+points = PackedVector3Array(4.75, 0.5, 11, 4.75, -0.5, 11, 4.75, 0.5, -11, -4.75, 0.5, 11, -4.75, -0.5, 11, 4.75, -0.5, -11, -4.75, 0.5, -11, -4.75, -0.5, -11)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_x2iqu"]
+points = PackedVector3Array(4.75, 0.5, 11, 4.75, -0.5, 11, 4.75, 0.5, -11, -4.75, 0.5, 11, -4.75, -0.5, 11, 4.75, -0.5, -11, -4.75, 0.5, -11, -4.75, -0.5, -11)
+
+[node name="Room" type="Node3D"]
+script = ExtResource("1_4vhi3")
+
+[node name="Spearman" parent="." instance=ExtResource("1_qwxw8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.82032, 0, 0)
+
+[node name="Meshes" type="Node3D" parent="."]
+
+[node name="Roof" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+mesh = SubResource("BoxMesh_643gk")
+skeleton = NodePath("../Floor")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Roof"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Roof/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_jav7h")
+
+[node name="Floor" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_643gk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Floor/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_yapy4")
+
+[node name="Wall1" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -10.5, 3.75, 0)
+mesh = SubResource("BoxMesh_52wal")
+skeleton = NodePath("../Floor")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Wall1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Wall1/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_du7yl")
+
+[node name="Wall2" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 10.5, 3.75, 0)
+mesh = SubResource("BoxMesh_52wal")
+skeleton = NodePath("../Floor")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Wall2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Wall2/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_1vljt")
+
+[node name="Wall3" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 3.75, -10.5)
+mesh = SubResource("BoxMesh_5qkmd")
+skeleton = NodePath("../Floor")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Wall3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Wall3/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_yitjl")
+
+[node name="Wall4" type="MeshInstance3D" parent="Meshes"]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, 0, 3.75, 10.5)
+mesh = SubResource("BoxMesh_5qkmd")
+skeleton = NodePath("../Floor")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Wall4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Wall4/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_x2iqu")
+
+[node name="Doors" type="Node3D" parent="."]
+
+[node name="DoorLeft" type="Sprite3D" parent="Doors"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 1.28, 9.997)
+texture = ExtResource("2_fgbq6")
+
+[node name="DoorRight" type="Sprite3D" parent="Doors"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 1.28, -9.975)
+texture = ExtResource("2_fgbq6")
+
+[node name="DoorTop" type="Sprite3D" parent="Doors"]
+transform = Transform3D(-1.74846e-07, 0, 4, 0, 4, 0, -4, 0, -1.74846e-07, -9.778, 1.28, 0)
+texture = ExtResource("2_fgbq6")
+
+[node name="DoorBottom" type="Sprite3D" parent="Doors"]
+transform = Transform3D(-1.74846e-07, 0, 4, 0, 4, 0, -4, 0, -1.74846e-07, 9.987, 1.28, 0)
+texture = ExtResource("2_fgbq6")
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75, 0)
+light_energy = 8.0
+shadow_enabled = true
+omni_range = 20.0

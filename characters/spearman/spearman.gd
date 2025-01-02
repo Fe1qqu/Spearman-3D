@@ -20,7 +20,7 @@ const MAX_VERTICAL_ANGLE: float = PI / 2.2
  
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	$Hud/TextEdit.text = str(health)
+	$Hud/HealthLabel.text = str(health)
 
 
 func _process(delta: float):
@@ -70,4 +70,4 @@ func take_damage(amount: int) -> void:
 	if health == 0:
 		queue_free()
 	
-	$Hud/TextEdit.text = str(health)
+	$Hud/HealthLabel.text = str(health)

@@ -7,8 +7,8 @@ class_name Enemy
 @export var spearman: Spearman
 
 func _ready() -> void:
-	$SubViewport/HeathBar3D.max_value = health
-	$SubViewport/HeathBar3D.value = health
+	$Sprite3D/SubViewport/HeathBar3D.max_value = health
+	$Sprite3D/SubViewport/HeathBar3D.value = health
 
 func _physics_process(delta: float) -> void:
 	var direction = (spearman.global_position - global_position).normalized()
@@ -21,4 +21,4 @@ func take_damage(amount: int) -> void:
 	if health == 0:
 		queue_free()
 	
-	$SubViewport/HeathBar3D.value = health
+	$Sprite3D/SubViewport/HeathBar3D.value = health

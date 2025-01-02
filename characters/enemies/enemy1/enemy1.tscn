@@ -13,13 +13,14 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_60opp"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_2miyl"]
-viewport_path = NodePath("SubViewport")
+viewport_path = NodePath("Sprite3D/SubViewport")
 
 [node name="Enemy1" type="CharacterBody3D" groups=["enemies"]]
 script = ExtResource("1_a102l")
+speed = 111.495
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 1, 0)
+transform = Transform3D(1.08, 0, 0, 0, 1.08, 0, 0, 0, 1.08, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_5h433")
 
 [node name="Mesh" parent="." instance=ExtResource("1_fvvm6")]
@@ -33,6 +34,7 @@ transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0.931388, 0)
 shape = SubResource("CapsuleShape3D_rtcbi")
 
 [node name="HurtBox" parent="." instance=ExtResource("4_3tt3n")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
 
 [node name="CollisionShape3D" parent="HurtBox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01328, 0)
@@ -43,11 +45,11 @@ transform = Transform3D(0.360174, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.28665, 0)
 billboard = 1
 texture = SubResource("ViewportTexture_2miyl")
 
-[node name="SubViewport" type="SubViewport" parent="."]
+[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
 disable_3d = true
 transparent_bg = true
 
-[node name="HeathBar3D" parent="SubViewport" instance=ExtResource("5_f0yfl")]
+[node name="HeathBar3D" parent="Sprite3D/SubViewport" instance=ExtResource("5_f0yfl")]
 
 [editable path="Hitbox"]
 [editable path="HurtBox"]
