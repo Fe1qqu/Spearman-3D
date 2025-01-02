@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://btlserpolr4kt"]
+[gd_scene load_steps=6 format=3 uid="uid://btlserpolr4kt"]
 
 [ext_resource type="PackedScene" uid="uid://co8elsodva3xg" path="res://characters/spearman/spearman.tscn" id="1_q0v45"]
+[ext_resource type="PackedScene" uid="uid://d132irdd8k1eu" path="res://characters/enemies/enemy1/enemy1.tscn" id="2_mti6f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qrvsd"]
 albedo_color = Color(0.299547, 0.299547, 0.299547, 1)
@@ -37,3 +38,15 @@ spot_angle_attenuation = 0.00704101
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-0.518176, 0, -0.855274, 0, 1, 0, 0.855274, 0, -0.518176, 0, 1.52156, -6.91939)
 fov = 113.5
+
+[node name="Enemy2" parent="." node_paths=PackedStringArray("spearman") instance=ExtResource("2_mti6f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 6)
+spearman = NodePath("../Spearman")
+
+[node name="Enemy1" parent="." node_paths=PackedStringArray("spearman") instance=ExtResource("2_mti6f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 3)
+spearman = NodePath("../Spearman")
+
+[node name="Enemy3" parent="." node_paths=PackedStringArray("spearman") instance=ExtResource("2_mti6f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.83499, 0, 3)
+spearman = NodePath("../Spearman")

@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3 uid="uid://d132irdd8k1eu"]
+
+[ext_resource type="Script" path="res://characters/enemies/enemy.gd" id="1_a102l"]
+[ext_resource type="PackedScene" uid="uid://648j7fnoua0g" path="res://characters/enemies/enemy1/enemy1.glb" id="1_fvvm6"]
+[ext_resource type="PackedScene" uid="uid://bd4kvg57bljs7" path="res://other/hitbox.tscn" id="3_cpg4k"]
+[ext_resource type="PackedScene" uid="uid://durpqn0l2l7st" path="res://other/hurtbox.tscn" id="4_3tt3n"]
+[ext_resource type="PackedScene" uid="uid://bv3b2yuij34jp" path="res://characters/enemies/heath_bar_3d.tscn" id="5_f0yfl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5h433"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rtcbi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_60opp"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2miyl"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Enemy1" type="CharacterBody3D" groups=["enemies"]]
+script = ExtResource("1_a102l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_5h433")
+
+[node name="Mesh" parent="." instance=ExtResource("1_fvvm6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Hitbox" parent="." instance=ExtResource("3_cpg4k")]
+damage = 1
+
+[node name="CollisionShape3D" parent="Hitbox" index="0"]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0.931388, 0)
+shape = SubResource("CapsuleShape3D_rtcbi")
+
+[node name="HurtBox" parent="." instance=ExtResource("4_3tt3n")]
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01328, 0)
+shape = SubResource("CapsuleShape3D_60opp")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.360174, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.28665, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_2miyl")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+
+[node name="HeathBar3D" parent="SubViewport" instance=ExtResource("5_f0yfl")]
+
+[editable path="Hitbox"]
+[editable path="HurtBox"]
