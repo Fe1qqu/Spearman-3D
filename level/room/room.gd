@@ -1,19 +1,40 @@
 extends Node3D
 
-@onready var doors = [$Doors/DoorTop, $Doors/DoorBottom,
-					  $Doors/DoorLeft, $Doors/DoorRight]
+@export var spearman = preload("res://characters/spearman/spearman.tscn")
+var spearman_instance: Spearman = null
 
-# 4 - старт, 3 - босс, 2 - предмет, 1 - обычная
-func set_room_type(type):
-	pass
-	#match room_type:
-		#3:
-			#spawn_boss()
-		#2:
-			#spawn_item()
-		#1:
-			#spawn_enemies()
+@onready var level_manager = get_parent()
 
+@onready var doors = [$Doors/DoorTop, $Doors/DoorRight,
+					  $Doors/DoorBottom, $Doors/DoorLeft]
+
+@onready var spearman_positions = {
+					  0: Vector3(8, 0, 0), # Верхняя дверь
+					  1: Vector3(0, 0, 8), # Правая дверь
+					  2: Vector3(-8, 0, 0), # Нижняя дверь
+					  3: Vector3(0, 0, -8), # Левая дверь
+				}
+
+# Количество противников в комнате
+var count_enemies: int
+
+func set_room_type(type: int, from_door_index: int):
+	spawn_spearman(from_door_index)
+	
+	match type:
+		4: # Стартовая комната
+			open_all_doors()
+		3: # Комната с боссом
+			close_all_doors()
+			spawn_boss()
+		2: # Комната с предметом
+			open_all_doors()
+			spawn_item()
+		1: # Обычная комната
+			close_all_doors()
+			spawn_enemies()
+		-1: # Зачищенная обычная комната
+			open_all_doors()
 
 func show_door(index):
 	doors[index].visible = true
@@ -22,17 +43,101 @@ func show_door(index):
 func hide_door(index):
 	doors[index].visible = false
 
+# Метод для изменения состояния двери
+func set_door_state(index: int, is_open: bool):
+	var door = doors[index]
+	var area = door.get_node("Area3D")
+	var collision_shape = area.get_node("CollisionShape3D")
+	
+	if is_open:
+		door.texture = load("res://textures/door_opened.png")
+		collision_shape.set_deferred("disabled", false)
+	else:
+		door.texture = load("res://textures/door_closed.png")
+		collision_shape.set_deferred("disabled", true)
 
-#func spawn_boss():
+# Закрываем все двери
+func close_all_doors():
+	for i in range(doors.size()):
+		if doors[i].visible:
+			set_door_state(i, false)
+
+# Открываем все двери
+func open_all_doors():
+	for i in range(doors.size()):
+		if doors[i].visible:
+			set_door_state(i, true)
+
+
+func spawn_spearman(from_door_index: int):
+	if spearman_instance == null:
+		spearman_instance = spearman.instantiate()
+		add_child(spearman_instance)
+
+	# Определяем позицию и направление
+	var position = Vector3.ZERO if from_door_index == -1 else spearman_positions[from_door_index]
+	spearman_instance.position = position
+
+	# Устанавливаем направление взгляда, если это не стартовая позиция
+	if from_door_index != -1:
+		spearman_instance.look_at(Vector3.ZERO)
+		spearman_instance.rotate_y(-PI / 2)
+
+
+func spawn_boss():
+	pass
 	#var boss = preload("res://Boss.tscn").instance()
 	#add_child(boss)
 
-#func spawn_item():
+
+func spawn_item():
+	pass
 	#var item = preload("res://Item.tscn").instance()
 	#add_child(item)
 
-#func spawn_enemies():
-	#for i in range(randi() % 3 + 1):
-		#var enemy = preload("res://Enemy.tscn").instance()
-		#enemy.position = Vector3(randf() * 5, 0, randf() * 5)
-		#add_child(enemy)
+
+func spawn_enemies():
+	var current_stage = level_manager.current_stage
+	
+	var enemy_set = level_manager.enemy_layout[current_stage]
+	var position_set = level_manager.enemy_positions_layout[current_stage]
+	
+	var random_index = randi() % enemy_set.size()
+	var enemies_to_spawn = enemy_set[random_index]
+	var positions_to_use = position_set[random_index]
+	
+	count_enemies = enemies_to_spawn.size()
+	
+	for i in range(count_enemies):
+		var enemy_type_index = enemies_to_spawn[i]
+		var enemy_instance = level_manager.enemy_scenes[enemy_type_index].instantiate()
+		enemy_instance.position = positions_to_use[i]
+		enemy_instance.spearman = spearman_instance
+		
+		enemy_instance.connect("tree_exited", self._on_enemy_died)
+		
+		add_child(enemy_instance)
+
+
+func _on_enemy_died():
+	count_enemies -= 1
+	if count_enemies == 0:
+		open_all_doors()
+		var position_on_map: Vector2 = level_manager.current_room_position
+		level_manager.map[position_on_map.x][position_on_map.y] = -1 # Зачищенная обычная комната
+
+
+func _on_door_area_body_entered(_body: Spearman, door_name: String) -> void:
+	var direction: int = -1
+	
+	match door_name:
+		"DoorTop":
+			direction = 0 # Вверх
+		"DoorRight":
+			direction = 1 # Вправо
+		"DoorBottom":
+			direction = 2 # Вниз
+		"DoorLeft":
+			direction = 3 # Влево
+	
+	level_manager.move_to_room(direction)

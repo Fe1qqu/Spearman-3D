@@ -74,6 +74,13 @@ look_right={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Spearman"
+3d_physics/layer_2="Enemy"
+3d_physics/layer_3="Environment"
+3d_physics/layer_4="Door"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name Spearman
 
-var health = 100
+var health = 1000
 
 const SPEED: float = 5.0
 const ACCELERATION: float = 8.0

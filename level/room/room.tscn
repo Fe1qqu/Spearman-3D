@@ -1,8 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://bmbb35ck2knhe"]
+[gd_scene load_steps=12 format=3 uid="uid://bmbb35ck2knhe"]
 
 [ext_resource type="Script" path="res://level/room/room.gd" id="1_4vhi3"]
-[ext_resource type="PackedScene" uid="uid://co8elsodva3xg" path="res://characters/spearman/spearman.tscn" id="1_qwxw8"]
-[ext_resource type="Texture2D" uid="uid://c6aebm3j2qqr2" path="res://level/room/door_opened.bmp" id="2_fgbq6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_643gk"]
 size = Vector3(20, 1, 20)
@@ -31,11 +29,11 @@ points = PackedVector3Array(4.75, 0.5, 11, 4.75, -0.5, 11, 4.75, 0.5, -11, -4.75
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_x2iqu"]
 points = PackedVector3Array(4.75, 0.5, 11, 4.75, -0.5, 11, 4.75, 0.5, -11, -4.75, 0.5, 11, -4.75, -0.5, 11, 4.75, -0.5, -11, -4.75, 0.5, -11, -4.75, -0.5, -11)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_dwe45"]
+size = Vector3(0.516113, 0.639648, 0.0700684)
+
 [node name="Room" type="Node3D"]
 script = ExtResource("1_4vhi3")
-
-[node name="Spearman" parent="." instance=ExtResource("1_qwxw8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.82032, 0, 0)
 
 [node name="Meshes" type="Node3D" parent="."]
 
@@ -45,6 +43,8 @@ mesh = SubResource("BoxMesh_643gk")
 skeleton = NodePath("../Floor")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Roof"]
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Roof/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_jav7h")
@@ -54,6 +54,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 mesh = SubResource("BoxMesh_643gk")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Floor"]
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Floor/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_yapy4")
@@ -64,6 +66,8 @@ mesh = SubResource("BoxMesh_52wal")
 skeleton = NodePath("../Floor")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Wall1"]
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Wall1/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_du7yl")
@@ -74,6 +78,8 @@ mesh = SubResource("BoxMesh_52wal")
 skeleton = NodePath("../Floor")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Wall2"]
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Wall2/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_1vljt")
@@ -84,6 +90,8 @@ mesh = SubResource("BoxMesh_5qkmd")
 skeleton = NodePath("../Floor")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Wall3"]
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Wall3/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_yitjl")
@@ -94,6 +102,8 @@ mesh = SubResource("BoxMesh_5qkmd")
 skeleton = NodePath("../Floor")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Meshes/Wall4"]
+collision_layer = 4
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Meshes/Wall4/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_x2iqu")
@@ -101,25 +111,79 @@ shape = SubResource("ConvexPolygonShape3D_x2iqu")
 [node name="Doors" type="Node3D" parent="."]
 
 [node name="DoorLeft" type="Sprite3D" parent="Doors"]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 1.28, 9.997)
-texture = ExtResource("2_fgbq6")
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 1.28, 9.987)
+
+[node name="Area3D" type="Area3D" parent="Doors/DoorLeft"]
+collision_layer = 8
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/DoorLeft/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0346904)
+shape = SubResource("BoxShape3D_dwe45")
 
 [node name="DoorRight" type="Sprite3D" parent="Doors"]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 1.28, -9.975)
-texture = ExtResource("2_fgbq6")
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 1.28, -9.987)
+
+[node name="Area3D" type="Area3D" parent="Doors/DoorRight"]
+collision_layer = 8
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/DoorRight/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.035)
+shape = SubResource("BoxShape3D_dwe45")
 
 [node name="DoorTop" type="Sprite3D" parent="Doors"]
-transform = Transform3D(-1.74846e-07, 0, 4, 0, 4, 0, -4, 0, -1.74846e-07, -9.778, 1.28, 0)
-texture = ExtResource("2_fgbq6")
+transform = Transform3D(-1.74846e-07, 0, 4, 0, 4, 0, -4, 0, -1.74846e-07, -9.987, 1.28, 0)
+
+[node name="Area3D" type="Area3D" parent="Doors/DoorTop"]
+collision_layer = 8
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/DoorTop/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.035)
+shape = SubResource("BoxShape3D_dwe45")
 
 [node name="DoorBottom" type="Sprite3D" parent="Doors"]
 transform = Transform3D(-1.74846e-07, 0, 4, 0, 4, 0, -4, 0, -1.74846e-07, 9.987, 1.28, 0)
-texture = ExtResource("2_fgbq6")
+
+[node name="Area3D" type="Area3D" parent="Doors/DoorBottom"]
+collision_layer = 8
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/DoorBottom/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002, 0, 0.035)
+shape = SubResource("BoxShape3D_dwe45")
 
 [node name="Lights" type="Node3D" parent="."]
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75, 0)
-light_energy = 8.0
-shadow_enabled = true
+[node name="OmniLight3D_1" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 4, 5.5)
+light_energy = 4.0
+light_specular = 0.0
 omni_range = 20.0
+
+[node name="OmniLight3D_2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 4, -5.5)
+light_energy = 4.0
+light_specular = 0.0
+omni_range = 20.0
+
+[node name="OmniLight3D_3" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 4, 5.5)
+light_energy = 4.0
+light_specular = 0.0
+omni_range = 20.0
+
+[node name="OmniLight3D_4" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 4, -5.5)
+light_energy = 4.0
+light_specular = 0.0
+omni_range = 20.0
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, 5)
+
+[connection signal="body_entered" from="Doors/DoorLeft/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorLeft"]]
+[connection signal="body_entered" from="Doors/DoorRight/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorRight"]]
+[connection signal="body_entered" from="Doors/DoorTop/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorTop"]]
+[connection signal="body_entered" from="Doors/DoorBottom/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorBottom"]]

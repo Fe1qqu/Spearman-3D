@@ -1,5 +1,4 @@
 extends CharacterBody3D
-class_name Enemy
 
 @export var speed = 30.0
 @export var health: int = 100

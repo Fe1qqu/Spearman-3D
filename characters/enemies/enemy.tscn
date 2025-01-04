@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://bbrj2x2m4wrvb"]
+
+[ext_resource type="Script" path="res://characters/enemies/enemy.gd" id="1_nq25q"]
+[ext_resource type="PackedScene" uid="uid://bd4kvg57bljs7" path="res://other/hitbox.tscn" id="2_5ml5l"]
+[ext_resource type="PackedScene" uid="uid://durpqn0l2l7st" path="res://other/hurtbox.tscn" id="3_by46x"]
+[ext_resource type="PackedScene" uid="uid://bv3b2yuij34jp" path="res://other/heath_bar_3d.tscn" id="4_euagi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5h433"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rtcbi"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_60opp"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2miyl"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
+[node name="Enemy" type="CharacterBody3D" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_nq25q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.08, 0, 0, 0, 1.08, 0, 0, 0, 1.08, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_5h433")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_5ml5l")]
+
+[node name="CollisionShape3D" parent="Hitbox" index="0"]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0.931388, 0)
+shape = SubResource("CapsuleShape3D_rtcbi")
+
+[node name="HurtBox" parent="." instance=ExtResource("3_by46x")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01328, 0)
+shape = SubResource("CapsuleShape3D_60opp")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.360174, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.28665, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_2miyl")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+disable_3d = true
+transparent_bg = true
+
+[node name="HeathBar3D" parent="Sprite3D/SubViewport" instance=ExtResource("4_euagi")]
+
+[editable path="Hitbox"]
+[editable path="HurtBox"]
