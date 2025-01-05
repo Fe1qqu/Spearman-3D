@@ -7,12 +7,21 @@ const MAP_SIZE = 6 # Размер карты (6x6 комнат)
 
 var map = [] # Карта уровня
 var current_room_position = Vector2(0, 0) # Текущая позиция на карте
-var current_room = null
+var room_instance = null
+
+var visible_on_map_rooms = [] # Массив для хранения посещённых комнат и их соседей
 
 var enemy_scenes = [
 	preload("res://characters/enemies/enemy1/enemy1.tscn"),
 	preload("res://characters/enemies/enemy2/enemy2.tscn"),
 	preload("res://characters/enemies/enemy3/enemy3.tscn")
+]
+
+var boss_scenes = [
+	preload("res://characters/enemies/enemy4/enemy4.tscn"),
+	preload("res://characters/enemies/enemy5/enemy5.tscn"),
+	preload("res://characters/enemies/enemy6/enemy6.tscn"),
+	preload("res://characters/enemies/enemy7/enemy7.tscn")
 ]
 
 var enemy_layout = [
@@ -31,22 +40,23 @@ var enemy_positions_layout = [
 
 func _ready():
 	generate_level()
-	load_room(current_room_position, -1)
-	print_map()
+	load_room(-1)
 
 
 func generate_level():
 	# Создаём пустую карту
-	map = []
 	for i in range(MAP_SIZE):
 		map.append([])
+		visible_on_map_rooms.append([])
 		for j in range(MAP_SIZE):
 			map[i].append(0)
+			visible_on_map_rooms[i].append(0)
 	
 	var start_x = randi() % MAP_SIZE
 	var start_y = randi() % MAP_SIZE
 	current_room_position = Vector2(start_x, start_y)
 	map[start_x][start_y] = 4 # Стартовая комната
+	visible_on_map_rooms[start_x][start_y] = 4 # Помечаем стартовую комнату как посещённую
 	
 	var boss_x
 	var boss_y
@@ -85,23 +95,20 @@ func connect_rooms(x1, y1, x2, y2):
 	map[x2][y2] = target_room_type
 
 
-func load_room(position: Vector2, direction: int):
-	print(current_room_position)
+func load_room(direction: int):
+	if not room_instance:
+		room_instance = ROOM_SCENE.instantiate()
+		add_child(room_instance)
 	
-	if current_room:
-		current_room.queue_free()
+	update_doors_visibility(current_room_position)
 	
-	current_room = ROOM_SCENE.instantiate()
-	current_room.position = Vector3(0, 0, 0)
-	add_child(current_room)
+	var room_type = map[current_room_position.x][current_room_position.y]
+	room_instance.set_room_type(room_type, direction)
 	
-	var room_type = map[position.x][position.y]
-	current_room.set_room_type(room_type, direction)
-	
-	update_doors(current_room_position)
+	update_minimap()
 
 
-func update_doors(room_position: Vector2):
+func update_doors_visibility(room_position: Vector2):
 	var neighbors = [
 		Vector2(room_position.x - 1, room_position.y), # Сосед сверху
 		Vector2(room_position.x, room_position.y + 1), # Сосед справа
@@ -111,9 +118,12 @@ func update_doors(room_position: Vector2):
 	
 	for i in range(4):
 		if is_valid_position(neighbors[i]) and map[neighbors[i].x][neighbors[i].y] != 0:
-			current_room.show_door(i)
+			room_instance.show_door(i)
+			
+			# Помечаем соседей как возможные к посещению
+			visible_on_map_rooms[neighbors[i].x][neighbors[i].y] = map[neighbors[i].x][neighbors[i].y]
 		else:
-			current_room.hide_door(i)
+			room_instance.hide_door(i)
 
 
 func is_valid_position(room_position: Vector2) -> bool:
@@ -136,9 +146,8 @@ func move_to_room(direction: int):
 	
 	if is_valid_position(new_position) and map[new_position.x][new_position.y] != 0:
 		current_room_position = new_position
-		load_room(current_room_position, direction)
+		load_room(direction)
 
 
-func print_map():
-	for row in map:
-		print(row)
+func update_minimap():
+	room_instance.spearman_instance.get_node("Hud/Minimap").update_map(current_room_position, visible_on_map_rooms)

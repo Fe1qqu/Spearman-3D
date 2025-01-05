@@ -9,17 +9,21 @@ var spearman_instance: Spearman = null
 					  $Doors/DoorBottom, $Doors/DoorLeft]
 
 @onready var spearman_positions = {
-					  0: Vector3(8, 0, 0), # Верхняя дверь
-					  1: Vector3(0, 0, 8), # Правая дверь
-					  2: Vector3(-8, 0, 0), # Нижняя дверь
-					  3: Vector3(0, 0, -8), # Левая дверь
+					0: Vector3(8, 0, 0), # Верхняя дверь
+					1: Vector3(0, 0, 8), # Правая дверь
+					2: Vector3(-8, 0, 0), # Нижняя дверь
+					3: Vector3(0, 0, -8), # Левая дверь
 				}
 
 # Количество противников в комнате
 var count_enemies: int
 
 func set_room_type(type: int, from_door_index: int):
-	spawn_spearman(from_door_index)
+	if not spearman_instance:
+			spearman_instance = spearman.instantiate()
+			add_child(spearman_instance)
+	
+	move_spearman_to_door(from_door_index)
 	
 	match type:
 		4: # Стартовая комната
@@ -35,6 +39,7 @@ func set_room_type(type: int, from_door_index: int):
 			spawn_enemies()
 		-1: # Зачищенная обычная комната
 			open_all_doors()
+
 
 func show_door(index):
 	doors[index].visible = true
@@ -69,15 +74,10 @@ func open_all_doors():
 			set_door_state(i, true)
 
 
-func spawn_spearman(from_door_index: int):
-	if spearman_instance == null:
-		spearman_instance = spearman.instantiate()
-		add_child(spearman_instance)
-
-	# Определяем позицию и направление
-	var position = Vector3.ZERO if from_door_index == -1 else spearman_positions[from_door_index]
-	spearman_instance.position = position
-
+func move_spearman_to_door(from_door_index: int):
+	var spearman_position = Vector3.ZERO if from_door_index == -1 else spearman_positions[from_door_index]
+	spearman_instance.position = spearman_position
+	
 	# Устанавливаем направление взгляда, если это не стартовая позиция
 	if from_door_index != -1:
 		spearman_instance.look_at(Vector3.ZERO)
@@ -85,15 +85,22 @@ func spawn_spearman(from_door_index: int):
 
 
 func spawn_boss():
+	var current_stage = level_manager.current_stage
+	var boss_instance = level_manager.boss_scenes[current_stage].instantiate()
+	boss_instance.position = Vector3(0.1, 0, 0)
+	boss_instance.spearman = spearman_instance
+	
+	boss_instance.connect("tree_exited", self._on_boss_died)
+	
+	add_child(boss_instance)
+
+
+func _on_boss_died():
 	pass
-	#var boss = preload("res://Boss.tscn").instance()
-	#add_child(boss)
 
 
 func spawn_item():
 	pass
-	#var item = preload("res://Item.tscn").instance()
-	#add_child(item)
 
 
 func spawn_enemies():

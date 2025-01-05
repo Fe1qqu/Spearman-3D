@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnh0iim0mlwtq"]
+
+[ext_resource type="PackedScene" uid="uid://bbrj2x2m4wrvb" path="res://characters/enemies/enemy.tscn" id="1_48ilm"]
+[ext_resource type="PackedScene" uid="uid://c283u7orr1pn" path="res://characters/enemies/enemy5/enemy5.glb" id="2_waf51"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_33sqf"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
+[node name="Enemy5" instance=ExtResource("1_48ilm")]
+speed = 7.0
+health = 700
+
+[node name="Mesh" parent="." index="0" instance=ExtResource("2_waf51")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Sprite3D" parent="." index="4"]
+texture = SubResource("ViewportTexture_33sqf")
+
+[editable path="Hitbox"]
+[editable path="HurtBox"]

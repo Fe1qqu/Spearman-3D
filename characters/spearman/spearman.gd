@@ -3,7 +3,7 @@ class_name Spearman
 
 var health = 1000
 
-const SPEED: float = 5.0
+const SPEED: float = 10.0
 const ACCELERATION: float = 8.0
 
 var input_rotation_x: float = 0.0
@@ -46,7 +46,7 @@ func _physics_process(delta):
 	var direction = Vector2(
 		Input.get_action_strength("back") - Input.get_action_strength("forward"),
 		Input.get_action_strength("left") - Input.get_action_strength("right")
-	)
+	).normalized()
 	
 	direction = direction.rotated(-rotation.y)
 	

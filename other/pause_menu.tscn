@@ -1,0 +1,123 @@
+[gd_scene load_steps=7 format=3 uid="uid://20xw1dutr6ad"]
+
+[ext_resource type="Script" path="res://other/pause_menu.gd" id="1_jomsx"]
+[ext_resource type="Shader" path="res://other/pause_menu.gdshader" id="2_8ee4n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0te1q"]
+shader = ExtResource("2_8ee4n")
+shader_parameter/lod = 0.0
+
+[sub_resource type="Animation" id="Animation_56tey"]
+resource_name = "blur"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ll3bl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oroqf"]
+_data = {
+"RESET": SubResource("Animation_ll3bl"),
+"blur": SubResource("Animation_56tey")
+}
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jomsx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_0te1q")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.5
+offset_top = -33.0
+offset_right = 55.5
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.585, 1.585)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="ResumeButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Продолжить
+"
+
+[node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Выход"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_oroqf")
+}
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

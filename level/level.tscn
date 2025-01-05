@@ -1,8 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://btlserpolr4kt"]
+[gd_scene load_steps=3 format=3 uid="uid://btlserpolr4kt"]
 
 [ext_resource type="Script" path="res://level/level_manager.gd" id="1_782cr"]
+[ext_resource type="PackedScene" uid="uid://20xw1dutr6ad" path="res://other/pause_menu.tscn" id="2_hloey"]
 
 [node name="Level" type="Node3D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_hloey")]
+visible = false
 
 [node name="LevelManager" type="Node3D" parent="."]
 script = ExtResource("1_782cr")

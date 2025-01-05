@@ -7,7 +7,7 @@
 viewport_path = NodePath("Sprite3D/SubViewport")
 
 [node name="Enemy3" instance=ExtResource("1_5abuw")]
-speed = 80.0
+speed = 8.0
 health = 50
 
 [node name="Mesh" parent="." index="0" instance=ExtResource("2_5q1cs")]

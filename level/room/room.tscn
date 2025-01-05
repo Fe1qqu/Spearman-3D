@@ -180,9 +180,6 @@ light_energy = 4.0
 light_specular = 0.0
 omni_range = 20.0
 
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, 5)
-
 [connection signal="body_entered" from="Doors/DoorLeft/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorLeft"]]
 [connection signal="body_entered" from="Doors/DoorRight/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorRight"]]
 [connection signal="body_entered" from="Doors/DoorTop/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorTop"]]

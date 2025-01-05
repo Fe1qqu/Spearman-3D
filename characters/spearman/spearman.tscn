@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://co8elsodva3xg"]
+[gd_scene load_steps=10 format=3 uid="uid://co8elsodva3xg"]
 
 [ext_resource type="PackedScene" uid="uid://cuxnfxaa43scn" path="res://characters/spearman/spearman.glb" id="1_tsmym"]
 [ext_resource type="Script" path="res://characters/spearman/spearman.gd" id="1_yo08e"]
+[ext_resource type="Script" path="res://characters/spearman/minimap.gd" id="2_ed53a"]
 [ext_resource type="Texture2D" uid="uid://bxl3cka4hao6l" path="res://textures/gui.png" id="2_nmq2p"]
 [ext_resource type="PackedScene" uid="uid://cq21cvvwewgn7" path="res://characters/spearman/spear.tscn" id="3_j2777"]
 [ext_resource type="PackedScene" uid="uid://durpqn0l2l7st" path="res://other/hurtbox.tscn" id="4_4bfox"]
@@ -20,24 +21,37 @@ script = ExtResource("1_yo08e")
 
 [node name="Hud" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Minimap" type="Control" parent="Hud"]
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -148.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 148.0
+grow_horizontal = 0
+script = ExtResource("2_ed53a")
 
 [node name="TextureRect" type="TextureRect" parent="Hud"]
 layout_mode = 0
-offset_left = 989.0
-offset_top = 125.0
-offset_right = 1055.0
-offset_bottom = 325.0
+offset_left = 1020.0
+offset_top = 196.0
+offset_right = 1086.0
+offset_bottom = 396.0
 texture = ExtResource("2_nmq2p")
 
 [node name="HealthLabel" type="Label" parent="Hud"]
 layout_mode = 0
-offset_left = 1071.0
-offset_top = 141.0
-offset_right = 1111.0
-offset_bottom = 164.0
+offset_left = 1092.0
+offset_top = 211.0
+offset_right = 1132.0
+offset_bottom = 234.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_t05ij")
 
 [node name="Camera3D" type="Camera3D" parent="."]
