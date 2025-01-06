@@ -24,6 +24,8 @@ var boss_scenes = [
 	preload("res://characters/enemies/enemy7/enemy7.tscn")
 ]
 
+var item_stand_scene = preload("res://items/item_stand.tscn")
+
 var enemy_layout = [
 	[[0, 0], [0, 0, 1], [0, 0, 0]],      # Этаж 1
 	[[1, 1], [1, 2], [0, 1, 1]],         # Этаж 2
@@ -44,6 +46,9 @@ func _ready():
 
 
 func generate_level():
+	map = []
+	visible_on_map_rooms = []
+	
 	# Создаём пустую карту
 	for i in range(MAP_SIZE):
 		map.append([])
@@ -151,3 +156,18 @@ func move_to_room(direction: int):
 
 func update_minimap():
 	room_instance.spearman_instance.get_node("Hud/Minimap").update_map(current_room_position, visible_on_map_rooms)
+
+
+func go_to_next_stage():
+	current_stage += 1
+	
+	if current_stage == 4:
+		game_won()
+		return
+	
+	generate_level()
+	load_room(-1)
+
+
+func game_won():
+	get_tree().quit()

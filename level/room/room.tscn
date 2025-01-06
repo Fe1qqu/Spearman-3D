@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bmbb35ck2knhe"]
+[gd_scene load_steps=13 format=3 uid="uid://bmbb35ck2knhe"]
 
 [ext_resource type="Script" path="res://level/room/room.gd" id="1_4vhi3"]
 
@@ -31,6 +31,9 @@ points = PackedVector3Array(4.75, 0.5, 11, 4.75, -0.5, 11, 4.75, 0.5, -11, -4.75
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dwe45"]
 size = Vector3(0.516113, 0.639648, 0.0700684)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3jtg5"]
+size = Vector3(0.345, 0.395, 0.077)
 
 [node name="Room" type="Node3D"]
 script = ExtResource("1_4vhi3")
@@ -118,7 +121,7 @@ collision_layer = 8
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/DoorLeft/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0346904)
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0.0346904)
 shape = SubResource("BoxShape3D_dwe45")
 
 [node name="DoorRight" type="Sprite3D" parent="Doors"]
@@ -129,7 +132,7 @@ collision_layer = 8
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/DoorRight/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.035)
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, -0.0350001)
 shape = SubResource("BoxShape3D_dwe45")
 
 [node name="DoorTop" type="Sprite3D" parent="Doors"]
@@ -140,7 +143,7 @@ collision_layer = 8
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/DoorTop/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.035)
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, -0.035)
 shape = SubResource("BoxShape3D_dwe45")
 
 [node name="DoorBottom" type="Sprite3D" parent="Doors"]
@@ -151,31 +154,44 @@ collision_layer = 8
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/DoorBottom/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002, 0, 0.035)
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -0.002, 0, 0.035)
 shape = SubResource("BoxShape3D_dwe45")
+
+[node name="DoorBoss" type="Sprite3D" parent="Doors"]
+transform = Transform3D(7.22418, 0, 0, 0, -1.78968e-07, -4.0943, 0, 4.0943, -1.78968e-07, 0, 0.01, 0)
+region_rect = Rect2(0, 0, 57, 74)
+
+[node name="Area3D" type="Area3D" parent="Doors/DoorBoss"]
+collision_layer = 8
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Doors/DoorBoss/Area3D"]
+transform = Transform3D(1.66436, 0, 0, 0, 1.66436, 7.10543e-15, 0, -7.10543e-15, 1.66436, 0, 0, 0)
+shape = SubResource("BoxShape3D_3jtg5")
+disabled = true
 
 [node name="Lights" type="Node3D" parent="."]
 
 [node name="OmniLight3D_1" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 4, 5.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 4, 5)
 light_energy = 4.0
 light_specular = 0.0
 omni_range = 20.0
 
 [node name="OmniLight3D_2" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 4, -5.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 4, -5)
 light_energy = 4.0
 light_specular = 0.0
 omni_range = 20.0
 
 [node name="OmniLight3D_3" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 4, 5.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 4, 5)
 light_energy = 4.0
 light_specular = 0.0
 omni_range = 20.0
 
 [node name="OmniLight3D_4" type="OmniLight3D" parent="Lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 4, -5.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 4, -5)
 light_energy = 4.0
 light_specular = 0.0
 omni_range = 20.0
@@ -184,3 +200,4 @@ omni_range = 20.0
 [connection signal="body_entered" from="Doors/DoorRight/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorRight"]]
 [connection signal="body_entered" from="Doors/DoorTop/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorTop"]]
 [connection signal="body_entered" from="Doors/DoorBottom/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorBottom"]]
+[connection signal="body_entered" from="Doors/DoorBoss/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorBoss"]]

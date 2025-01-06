@@ -3,8 +3,8 @@ extends Control
 var boss_mark_texture = preload("res://textures/boss_mark.png")
 
 const room_size = Vector2(12, 8) # Размер комнаты на мини-карте
-const  spacing = Vector2(10, 6) # Промежутки между комнатами
-const  corridor_thickness = 4 # Толщина соединений (коридоров)
+const spacing = Vector2(10, 6) # Промежутки между комнатами
+const corridor_thickness = 4 # Толщина соединений (коридоров)
 var map = [] # Карта уровня
 var current_room = Vector2(0, 0) # Текущая позиция игрока
 

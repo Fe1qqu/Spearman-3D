@@ -5,9 +5,11 @@ extends CharacterBody3D
 
 @export var spearman: Spearman
 
+@onready var health_bar = $Sprite3D/SubViewport/HealthBar3D
+
 func _ready() -> void:
-	$Sprite3D/SubViewport/HeathBar3D.max_value = health
-	$Sprite3D/SubViewport/HeathBar3D.value = health
+	health_bar.max_value = health
+	health_bar.value = health
 	
 	speed *= 50
 
@@ -24,4 +26,4 @@ func take_damage(amount: int) -> void:
 	if health == 0:
 		queue_free()
 	
-	$Sprite3D/SubViewport/HeathBar3D.value = health
+	health_bar.value = health

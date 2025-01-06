@@ -18,6 +18,8 @@ var spearman_instance: Spearman = null
 # Количество противников в комнате
 var count_enemies: int
 
+var current_item_stand: Node = null
+
 func set_room_type(type: int, from_door_index: int):
 	if not spearman_instance:
 			spearman_instance = spearman.instantiate()
@@ -51,8 +53,7 @@ func hide_door(index):
 # Метод для изменения состояния двери
 func set_door_state(index: int, is_open: bool):
 	var door = doors[index]
-	var area = door.get_node("Area3D")
-	var collision_shape = area.get_node("CollisionShape3D")
+	var collision_shape = door.get_node("Area3D").get_node("CollisionShape3D")
 	
 	if is_open:
 		door.texture = load("res://textures/door_opened.png")
@@ -93,14 +94,42 @@ func spawn_boss():
 	boss_instance.connect("tree_exited", self._on_boss_died)
 	
 	add_child(boss_instance)
+	
+	set_boss_door_state(false)
 
 
 func _on_boss_died():
-	pass
+	set_boss_door_state(true)
+
+
+func set_boss_door_state(is_open: bool):
+	var door = $Doors/DoorBoss
+	var collision_shape = door.get_node("Area3D").get_node("CollisionShape3D")
+	
+	if is_open:
+		door.texture = load("res://textures/boss_door_opened.png")
+		collision_shape.set_deferred("disabled", false)
+	else:
+		door.texture = load("res://textures/boss_door_closed.png")
+		collision_shape.set_deferred("disabled", true)
+	
+	door.visible = true
 
 
 func spawn_item():
-	pass
+	var item_stand_instance = level_manager.item_stand_scene.instantiate()
+	current_item_stand = item_stand_instance
+	
+	var position_on_map: Vector2 = level_manager.current_room_position
+	level_manager.map[position_on_map.x][position_on_map.y] = -1 # Зачищенная обычная комната
+	
+	add_child(item_stand_instance)
+
+
+func clear_item_stand():
+	if current_item_stand:
+		current_item_stand.queue_free()
+		current_item_stand = null
 
 
 func spawn_enemies():
@@ -135,6 +164,8 @@ func _on_enemy_died():
 
 
 func _on_door_area_body_entered(_body: Spearman, door_name: String) -> void:
+	clear_item_stand()
+	
 	var direction: int = -1
 	
 	match door_name:
@@ -146,5 +177,10 @@ func _on_door_area_body_entered(_body: Spearman, door_name: String) -> void:
 			direction = 2 # Вниз
 		"DoorLeft":
 			direction = 3 # Влево
+		"DoorBoss":
+			set_boss_door_state(false)
+			$Doors/DoorBoss.visible = false
+			level_manager.go_to_next_stage()
+			return
 	
 	level_manager.move_to_room(direction)

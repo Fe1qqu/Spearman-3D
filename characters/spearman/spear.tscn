@@ -72,7 +72,7 @@ _data = {
 script = ExtResource("2_ss4yw")
 
 [node name="Stick" parent="." index="0"]
-transform = Transform3D(-9.877e-10, -0.0225959, 0, 0.0225959, -9.877e-10, 0, 0, 0, 0.0225959, -0.0210708, 0.687783, -0.313712)
+transform = Transform3D(-9.87698e-10, -0.0225959, 0, 0.0225959, -9.87698e-10, 0, 0, 0, 0.0225959, -0.0210708, 0.687783, -0.313712)
 
 [node name="Hitbox" parent="tip" index="0" instance=ExtResource("3_wo4qe")]
 

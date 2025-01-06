@@ -1,9 +1,9 @@
-extends CharacterBody3D
 class_name Spearman
+extends CharacterBody3D
 
-var health = 1000
+var health: int = 300
+var speed: int = 12
 
-const SPEED: float = 10.0
 const ACCELERATION: float = 8.0
 
 var input_rotation_x: float = 0.0
@@ -17,10 +17,14 @@ const SMOOTHING: float = 10.0
 const MAX_VERTICAL_ANGLE: float = PI / 2.2
 
 @onready var camera = $Camera3D
+@onready var spear = $Spear
  
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	$Hud/HealthLabel.text = str(health)
+	update_heath_label()
+	update_speed_label()
+	update_damage_label()
+	update_spear_lenght_label()
 
 
 func _process(delta: float):
@@ -50,8 +54,8 @@ func _physics_process(delta):
 	
 	direction = direction.rotated(-rotation.y)
 	
-	velocity.x = lerp(velocity.x, direction.x * SPEED, ACCELERATION * delta)
-	velocity.z = lerp(velocity.z, direction.y * SPEED, ACCELERATION * delta)
+	velocity.x = lerp(velocity.x, direction.x * speed, ACCELERATION * delta)
+	velocity.z = lerp(velocity.z, direction.y * speed, ACCELERATION * delta)
 	
 	move_and_slide()
  
@@ -62,12 +66,82 @@ func _input(event):
 		input_rotation_y = -deg_to_rad(event.relative.x) * MOUSE_SENSITIVITY
 	
 	if event.is_action_pressed("attack"):
-		$Spear.call("attack")
+		spear.call("attack")
 
 
 func take_damage(amount: int) -> void:
 	health = max(0, health - amount)
 	if health == 0:
-		queue_free()
+		game_over()
 	
+	update_heath_label()
+
+
+func game_over():
+	get_tree().call_deferred("change_scene_to_file", "res://other/game_over.tscn")
+
+
+func update_heath_label():
 	$Hud/HealthLabel.text = str(health)
+
+
+func update_speed_label():
+	$Hud/SpeedLabel.text = str(speed / 2.0)
+
+
+func update_damage_label():
+	$Hud/DamageLabel.text = str(spear.damage / 2.0)
+
+
+func update_spear_lenght_label():
+	$Hud/SpearLenghtLabel.text = str(spear.lenght / 2.0)
+
+
+func add_health(amount: int = 2):
+	health += amount
+	update_heath_label()
+
+
+func add_speed(amount: int = 2):
+	speed += amount
+	update_speed_label()
+
+
+func add_damage(amount: int = 4):
+	spear.call("set_damage", spear.damage + amount)
+	update_damage_label()
+
+
+func add_spear_lenght(amount: int = 8):
+	spear.lenght += amount
+	spear.scale.x += amount / 20.0
+	update_spear_lenght_label()
+
+
+func pick_item(item_type: String):
+	match item_type:
+		"hearth":
+			add_health()
+		"lightning":
+			add_speed()
+		"stick_rope":
+			add_spear_lenght()
+		"dumbbell":
+			add_damage()
+		_:
+			print("Unknown item type:", item_type)
+			return
+	
+	add_item_to_hud("res://textures/" + item_type + ".png")
+
+
+func add_item_to_hud(texture_path: String) -> void:
+	var texture = load(texture_path)
+	if not texture:
+		print("Failed to load texture:", texture_path)
+		return
+	
+	var item_icon = TextureRect.new()
+	item_icon.texture = texture
+	
+	$Hud/ItemsGridContainer.add_child(item_icon)

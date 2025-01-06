@@ -45,7 +45,7 @@ texture = SubResource("ViewportTexture_2miyl")
 disable_3d = true
 transparent_bg = true
 
-[node name="HeathBar3D" parent="Sprite3D/SubViewport" instance=ExtResource("4_euagi")]
+[node name="HealthBar3D" parent="Sprite3D/SubViewport" instance=ExtResource("4_euagi")]
 
 [editable path="Hitbox"]
 [editable path="HurtBox"]

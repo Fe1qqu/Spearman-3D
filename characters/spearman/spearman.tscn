@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://co8elsodva3xg"]
+[gd_scene load_steps=9 format=3 uid="uid://co8elsodva3xg"]
 
 [ext_resource type="PackedScene" uid="uid://cuxnfxaa43scn" path="res://characters/spearman/spearman.glb" id="1_tsmym"]
 [ext_resource type="Script" path="res://characters/spearman/spearman.gd" id="1_yo08e"]
@@ -6,9 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bxl3cka4hao6l" path="res://textures/gui.png" id="2_nmq2p"]
 [ext_resource type="PackedScene" uid="uid://cq21cvvwewgn7" path="res://characters/spearman/spear.tscn" id="3_j2777"]
 [ext_resource type="PackedScene" uid="uid://durpqn0l2l7st" path="res://other/hurtbox.tscn" id="4_4bfox"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t05ij"]
-bg_color = Color(1, 1, 1, 0)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wg2j7"]
 radius = 1.0
@@ -29,6 +26,7 @@ grow_vertical = 2
 
 [node name="Minimap" type="Control" parent="Hud"]
 layout_mode = 1
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -148.0
@@ -52,7 +50,37 @@ offset_left = 1092.0
 offset_top = 211.0
 offset_right = 1132.0
 offset_bottom = 234.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_t05ij")
+text = "
+"
+
+[node name="SpeedLabel" type="Label" parent="Hud"]
+layout_mode = 0
+offset_left = 1092.0
+offset_top = 261.0
+offset_right = 1132.0
+offset_bottom = 284.0
+
+[node name="DamageLabel" type="Label" parent="Hud"]
+layout_mode = 0
+offset_left = 1092.0
+offset_top = 311.0
+offset_right = 1132.0
+offset_bottom = 334.0
+
+[node name="SpearLenghtLabel" type="Label" parent="Hud"]
+layout_mode = 0
+offset_left = 1092.0
+offset_top = 361.0
+offset_right = 1132.0
+offset_bottom = 384.0
+
+[node name="ItemsGridContainer" type="GridContainer" parent="Hud"]
+layout_mode = 0
+offset_left = 989.0
+offset_top = 428.0
+offset_right = 1139.0
+offset_bottom = 578.0
+columns = 2
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.566127, 1.72926, 0)
