@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdbnckl76qwoi"]
+
+[ext_resource type="Texture2D" uid="uid://byoxi443m21q1" path="res://textures/main_menu_screen.png" id="1_6u6ke"]
+[ext_resource type="Script" path="res://other/main_menu.gd" id="1_ksvjf"]
+[ext_resource type="Theme" uid="uid://dw46s86e68w86" path="res://other/theme.tres" id="3_16eb5"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ksvjf")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_6u6ke")
+
+[node name="MarginContainer" type="CenterContainer" parent="."]
+layout_direction = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -358.0
+offset_right = 432.0
+theme = ExtResource("3_16eb5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 2
+alignment = 1
+
+[node name="NewGameButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "Новая игра"
+
+[node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "Выход"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

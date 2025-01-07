@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Spearmen 3D"
-run/main_scene="res://level/level.tscn"
+config/name="Spearman 3D"
+run/main_scene="res://other/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/show_image=false
 config/icon="res://icon.png"
