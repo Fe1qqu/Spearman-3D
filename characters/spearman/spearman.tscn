@@ -36,50 +36,100 @@ offset_bottom = 148.0
 grow_horizontal = 0
 script = ExtResource("2_ed53a")
 
-[node name="TextureRect" type="TextureRect" parent="Hud"]
-layout_mode = 0
-offset_left = 1020.0
-offset_top = 196.0
-offset_right = 1086.0
-offset_bottom = 396.0
+[node name="Stats" type="Control" parent="Hud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Hud/Stats"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -124.0
+offset_right = -66.0
+offset_bottom = 76.0
+grow_horizontal = 0
+grow_vertical = 2
 texture = ExtResource("2_nmq2p")
 
-[node name="HealthLabel" type="Label" parent="Hud"]
-layout_mode = 0
-offset_left = 1092.0
-offset_top = 211.0
-offset_right = 1132.0
-offset_bottom = 234.0
+[node name="HealthLabel" type="Label" parent="Hud/Stats"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -108.0
+offset_right = -16.0
+offset_bottom = -85.0
+grow_horizontal = 0
+grow_vertical = 2
 text = "
 "
 
-[node name="SpeedLabel" type="Label" parent="Hud"]
-layout_mode = 0
-offset_left = 1092.0
-offset_top = 261.0
-offset_right = 1132.0
-offset_bottom = 284.0
+[node name="SpeedLabel" type="Label" parent="Hud/Stats"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -56.0
+offset_right = -16.0
+offset_bottom = -33.0
+grow_horizontal = 0
+grow_vertical = 2
 
-[node name="DamageLabel" type="Label" parent="Hud"]
-layout_mode = 0
-offset_left = 1092.0
-offset_top = 311.0
-offset_right = 1132.0
-offset_bottom = 334.0
+[node name="DamageLabel" type="Label" parent="Hud/Stats"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -11.0
+offset_right = -16.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
 
-[node name="SpearLenghtLabel" type="Label" parent="Hud"]
-layout_mode = 0
-offset_left = 1092.0
-offset_top = 361.0
-offset_right = 1132.0
-offset_bottom = 384.0
+[node name="SpearLenghtLabel" type="Label" parent="Hud/Stats"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 43.0
+offset_right = -16.0
+offset_bottom = 66.0
+grow_horizontal = 0
+grow_vertical = 2
 
 [node name="ItemsGridContainer" type="GridContainer" parent="Hud"]
-layout_mode = 0
-offset_left = 989.0
-offset_top = 428.0
-offset_right = 1139.0
-offset_bottom = 578.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -172.0
+offset_top = -220.0
+offset_right = -22.0
+offset_bottom = -70.0
+grow_horizontal = 0
+grow_vertical = 0
 columns = 2
 
 [node name="Camera3D" type="Camera3D" parent="."]

@@ -82,19 +82,19 @@ func game_over():
 
 
 func update_heath_label():
-	$Hud/HealthLabel.text = str(health)
+	$Hud/Stats/HealthLabel.text = str(health)
 
 
 func update_speed_label():
-	$Hud/SpeedLabel.text = str(speed / 2.0)
+	$Hud/Stats/SpeedLabel.text = str(speed / 2.0)
 
 
 func update_damage_label():
-	$Hud/DamageLabel.text = str(spear.damage / 2.0)
+	$Hud/Stats/DamageLabel.text = str(spear.damage / 2.0)
 
 
 func update_spear_lenght_label():
-	$Hud/SpearLenghtLabel.text = str(spear.lenght / 2.0)
+	$Hud/Stats/SpearLenghtLabel.text = str(spear.lenght / 2.0)
 
 
 func add_health(amount: int = 2):
@@ -144,4 +144,4 @@ func add_item_to_hud(texture_path: String) -> void:
 	var item_icon = TextureRect.new()
 	item_icon.texture = texture
 	
-	$Hud/ItemsGridContainer.add_child(item_icon)
+	$Hud/Stats/ItemsGridContainer.add_child(item_icon)
