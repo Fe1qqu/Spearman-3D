@@ -12,12 +12,17 @@ func _ready() -> void:
 	health_bar.value = health
 	
 	speed *= 50
+	
+	look_at(spearman.global_position)
 
 
 func _physics_process(delta: float) -> void:
 	var direction = (spearman.global_position - global_position).normalized()
 	velocity = direction * speed * delta
-	look_at(spearman.global_position)
+	
+	var target_rotation = atan2(-direction.x, -direction.z)
+	rotation.y = lerp_angle(rotation.y, target_rotation, 4 * delta)
+	
 	move_and_slide()
 
 
