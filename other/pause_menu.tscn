@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://20xw1dutr6ad"]
+[gd_scene load_steps=8 format=3 uid="uid://20xw1dutr6ad"]
 
 [ext_resource type="Script" path="res://other/pause_menu.gd" id="1_jomsx"]
 [ext_resource type="Shader" path="res://other/pause_menu.gdshader" id="2_8ee4n"]
+[ext_resource type="Theme" uid="uid://dw46s86e68w86" path="res://other/theme.tres" id="3_epe5t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0te1q"]
 shader = ExtResource("2_8ee4n")
@@ -104,6 +105,7 @@ scale = Vector2(1.585, 1.585)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme = ExtResource("3_epe5t")
 
 [node name="ResumeButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
