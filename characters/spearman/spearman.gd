@@ -144,4 +144,4 @@ func add_item_to_hud(texture_path: String) -> void:
 	var item_icon = TextureRect.new()
 	item_icon.texture = texture
 	
-	$Hud/Stats/ItemsGridContainer.add_child(item_icon)
+	$Hud/ItemsGridContainer.add_child(item_icon)
