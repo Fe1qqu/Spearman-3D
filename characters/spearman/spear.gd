@@ -1,6 +1,6 @@
 extends Node3D
 
-var damage: int = 1000
+var damage: int = 10
 var lenght: int = 20 # Только для отображения в HUD 
 
 func _ready() -> void:
