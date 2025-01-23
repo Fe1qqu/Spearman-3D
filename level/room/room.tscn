@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bmbb35ck2knhe"]
+[gd_scene load_steps=14 format=3 uid="uid://bmbb35ck2knhe"]
 
 [ext_resource type="Script" path="res://level/room/room.gd" id="1_4vhi3"]
 
@@ -34,6 +34,12 @@ size = Vector3(0.516113, 0.639648, 0.0700684)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3jtg5"]
 size = Vector3(0.345, 0.395, 0.077)
+
+[sub_resource type="Environment" id="Environment_nn5h4"]
+ambient_light_source = 2
+ambient_light_color = Color(0.593134, 0.593134, 0.593134, 1)
+tonemap_mode = 2
+adjustment_brightness = 3.66
 
 [node name="Room" type="Node3D"]
 script = ExtResource("1_4vhi3")
@@ -171,6 +177,7 @@ shape = SubResource("BoxShape3D_3jtg5")
 disabled = true
 
 [node name="Lights" type="Node3D" parent="."]
+visible = false
 
 [node name="OmniLight3D_1" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 4, 5)
@@ -195,6 +202,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 4, -5)
 light_energy = 4.0
 light_specular = 0.0
 omni_range = 20.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.372576, 0)
+light_energy = 3.0
+omni_range = 40.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nn5h4")
 
 [connection signal="body_entered" from="Doors/DoorLeft/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorLeft"]]
 [connection signal="body_entered" from="Doors/DoorRight/Area3D" to="." method="_on_door_area_body_entered" binds= ["DoorRight"]]
