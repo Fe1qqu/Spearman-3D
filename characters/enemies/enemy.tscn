@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bbrj2x2m4wrvb"]
 
-[ext_resource type="Script" path="res://characters/enemies/enemy.gd" id="1_nq25q"]
+[ext_resource type="Script" uid="uid://7k67cpwhbod4" path="res://characters/enemies/enemy.gd" id="1_nq25q"]
 [ext_resource type="PackedScene" uid="uid://bd4kvg57bljs7" path="res://other/hitbox.tscn" id="2_5ml5l"]
 [ext_resource type="PackedScene" uid="uid://durpqn0l2l7st" path="res://other/hurtbox.tscn" id="3_by46x"]
 [ext_resource type="PackedScene" uid="uid://bv3b2yuij34jp" path="res://other/heath_bar_3d.tscn" id="4_euagi"]

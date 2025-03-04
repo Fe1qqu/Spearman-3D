@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdbnckl76qwoi"]
+[gd_scene load_steps=5 format=3 uid="uid://bdbnckl76qwoi"]
 
 [ext_resource type="Texture2D" uid="uid://byoxi443m21q1" path="res://textures/main_menu_screen.png" id="1_6u6ke"]
-[ext_resource type="Script" path="res://other/main_menu.gd" id="1_ksvjf"]
+[ext_resource type="Script" uid="uid://d3xbf1reve8yl" path="res://other/main_menu.gd" id="1_ksvjf"]
 [ext_resource type="Theme" uid="uid://dw46s86e68w86" path="res://other/theme.tres" id="3_16eb5"]
+
+[sub_resource type="Theme" id="Theme_on3sq"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -40,6 +42,7 @@ alignment = 1
 [node name="NewGameButton" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+theme = SubResource("Theme_on3sq")
 text = "Новая игра"
 
 [node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer"]

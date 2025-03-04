@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://co8elsodva3xg"]
 
 [ext_resource type="PackedScene" uid="uid://cuxnfxaa43scn" path="res://characters/spearman/spearman.glb" id="1_tsmym"]
-[ext_resource type="Script" path="res://characters/spearman/spearman.gd" id="1_yo08e"]
-[ext_resource type="Script" path="res://characters/spearman/minimap.gd" id="2_ed53a"]
+[ext_resource type="Script" uid="uid://djqf0dsielne7" path="res://characters/spearman/spearman.gd" id="1_yo08e"]
+[ext_resource type="Script" uid="uid://c3a2b4258tw8v" path="res://characters/spearman/minimap.gd" id="2_ed53a"]
 [ext_resource type="Texture2D" uid="uid://bxl3cka4hao6l" path="res://textures/gui.png" id="2_nmq2p"]
 [ext_resource type="PackedScene" uid="uid://cq21cvvwewgn7" path="res://characters/spearman/spear.tscn" id="3_j2777"]
 [ext_resource type="PackedScene" uid="uid://durpqn0l2l7st" path="res://other/hurtbox.tscn" id="4_4bfox"]

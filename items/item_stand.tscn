@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dcrqn8qbsby5v"]
 
-[ext_resource type="Script" path="res://items/item_stand.gd" id="1_1bw3s"]
+[ext_resource type="Script" uid="uid://cda2bdsse83ki" path="res://items/item_stand.gd" id="1_1bw3s"]
 [ext_resource type="PackedScene" uid="uid://l74duyl27hs0" path="res://items/stand.glb" id="1_uker4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_584iv"]
@@ -68,8 +68,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1f4jp"]
 _data = {
-"RESET": SubResource("Animation_xb5qj"),
-"animation": SubResource("Animation_h8x8v")
+&"RESET": SubResource("Animation_xb5qj"),
+&"animation": SubResource("Animation_h8x8v")
 }
 
 [node name="ItemStand" type="Area3D"]

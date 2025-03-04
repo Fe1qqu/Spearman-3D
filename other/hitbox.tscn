@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bd4kvg57bljs7"]
 
-[ext_resource type="Script" path="res://other/hitbox.gd" id="1_51jcc"]
+[ext_resource type="Script" uid="uid://bumskoib23w6k" path="res://other/hitbox.gd" id="1_51jcc"]
 
 [node name="Hitbox" type="Area3D" groups=["hitboxes"]]
 monitoring = false

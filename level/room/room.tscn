@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://bmbb35ck2knhe"]
 
-[ext_resource type="Script" path="res://level/room/room.gd" id="1_4vhi3"]
+[ext_resource type="Script" uid="uid://bqj8ewl22fuln" path="res://level/room/room.gd" id="1_4vhi3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_643gk"]
 size = Vector3(20, 1, 20)
@@ -177,7 +177,6 @@ shape = SubResource("BoxShape3D_3jtg5")
 disabled = true
 
 [node name="Lights" type="Node3D" parent="."]
-visible = false
 
 [node name="OmniLight3D_1" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 4, 5)
@@ -204,7 +203,8 @@ light_specular = 0.0
 omni_range = 20.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.372576, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.90254, 0)
+visible = false
 light_energy = 3.0
 omni_range = 40.0
 

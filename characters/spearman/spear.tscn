@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cq21cvvwewgn7"]
 
 [ext_resource type="PackedScene" uid="uid://di5a0c7vlv4et" path="res://characters/spearman/spear.glb" id="1_0ureu"]
-[ext_resource type="Script" path="res://characters/spearman/spear.gd" id="2_ss4yw"]
+[ext_resource type="Script" uid="uid://c3c2qwucdkq4t" path="res://characters/spearman/spear.gd" id="2_ss4yw"]
 [ext_resource type="PackedScene" uid="uid://bd4kvg57bljs7" path="res://other/hitbox.tscn" id="3_wo4qe"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t1hjl"]
@@ -64,8 +64,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gt7b5"]
 _data = {
-"RESET": SubResource("Animation_7h5mv"),
-"attack": SubResource("Animation_5hbfd")
+&"RESET": SubResource("Animation_7h5mv"),
+&"attack": SubResource("Animation_5hbfd")
 }
 
 [node name="Spear" instance=ExtResource("1_0ureu")]
@@ -83,7 +83,7 @@ disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 libraries = {
-"": SubResource("AnimationLibrary_gt7b5")
+&"": SubResource("AnimationLibrary_gt7b5")
 }
 
 [editable path="tip/Hitbox"]

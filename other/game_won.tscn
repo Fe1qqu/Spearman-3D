@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b2uvpep0nlibi"]
 
-[ext_resource type="Script" path="res://other/game_won.gd" id="1_3phn8"]
+[ext_resource type="Script" uid="uid://lp106571kpn6" path="res://other/game_won.gd" id="1_3phn8"]
 [ext_resource type="Texture2D" uid="uid://baqyaso35y4kt" path="res://textures/game_won.png" id="2_gwbds"]
 
 [node name="GameWon" type="Control"]

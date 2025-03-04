@@ -3,6 +3,7 @@ extends Node3D
 var current_stage = 0 # Текущий этаж
 
 const ROOM_SCENE = preload("res://level/room/room.tscn")
+enum Room {START = 4, BOSS = 3, ITEM = 2, DEFAULT = 1}
 const MAP_SIZE = 6 # Размер карты (6x6 комнат)
 
 var map = [] # Карта уровня
@@ -60,8 +61,8 @@ func generate_level():
 	var start_x = randi() % MAP_SIZE
 	var start_y = randi() % MAP_SIZE
 	current_room_position = Vector2(start_x, start_y)
-	map[start_x][start_y] = 4 # Стартовая комната
-	visible_on_map_rooms[start_x][start_y] = 4 # Помечаем стартовую комнату как посещённую
+	map[start_x][start_y] = Room.START
+	visible_on_map_rooms[start_x][start_y] = Room.START # Помечаем стартовую комнату как посещённую
 	
 	var boss_x
 	var boss_y
@@ -69,7 +70,7 @@ func generate_level():
 		boss_x = randi() % MAP_SIZE
 		boss_y = randi() % MAP_SIZE
 		if abs(boss_x - start_x) + abs(boss_y - start_y) > 2:
-			map[boss_x][boss_y] = 3 # Комната с боссом
+			map[boss_x][boss_y] = Room.BOSS # Комната с боссом
 			break
 
 	var item_x
@@ -78,7 +79,7 @@ func generate_level():
 		item_x = randi() % MAP_SIZE
 		item_y = randi() % MAP_SIZE
 		if abs(item_x - start_x) + abs(item_y - start_y) > 2 and abs(item_x - boss_x) + abs(item_y - boss_y) > 2:
-			map[item_x][item_y] = 2 # Комната с предметом
+			map[item_x][item_y] = Room.ITEM # Комната с предметом
 			break
 	
 	connect_rooms(start_x, start_y, boss_x, boss_y)
@@ -95,7 +96,7 @@ func connect_rooms(x1, y1, x2, y2):
 			y1 += sign(y2 - y1)
 		
 		if map[x1][y1] == 0:
-			map[x1][y1] = 1 # Обычная комната
+			map[x1][y1] = Room.DEFAULT # Обычная комната
 	
 	map[x2][y2] = target_room_type
 
