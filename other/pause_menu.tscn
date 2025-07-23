@@ -118,7 +118,7 @@ text = "Выход"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_oroqf")
+&"": SubResource("AnimationLibrary_oroqf")
 }
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
