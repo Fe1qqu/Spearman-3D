@@ -42,10 +42,8 @@ func set_room_type(type: int, from_door_index: int):
 		-1: # Зачищенная обычная комната
 			open_all_doors()
 
-
 func show_door(index):
 	doors[index].visible = true
-
 
 func hide_door(index):
 	doors[index].visible = false
@@ -74,7 +72,6 @@ func open_all_doors():
 		if doors[i].visible:
 			set_door_state(i, true)
 
-
 func move_spearman_to_door(from_door_index: int):
 	var spearman_position = Vector3.ZERO if from_door_index == -1 else spearman_positions[from_door_index]
 	spearman_instance.position = spearman_position
@@ -83,7 +80,6 @@ func move_spearman_to_door(from_door_index: int):
 	if from_door_index != -1:
 		spearman_instance.look_at(Vector3.ZERO)
 		spearman_instance.rotate_y(-PI / 2)
-
 
 func spawn_boss():
 	var current_stage = level_manager.current_stage
@@ -97,10 +93,8 @@ func spawn_boss():
 	
 	set_boss_door_state(false)
 
-
 func _on_boss_died():
 	set_boss_door_state(true)
-
 
 func set_boss_door_state(is_open: bool):
 	var door = $Doors/DoorBoss
@@ -115,7 +109,6 @@ func set_boss_door_state(is_open: bool):
 	
 	door.visible = true
 
-
 func spawn_item():
 	var item_stand_instance = level_manager.item_stand_scene.instantiate()
 	current_item_stand = item_stand_instance
@@ -125,12 +118,10 @@ func spawn_item():
 	
 	add_child(item_stand_instance)
 
-
 func clear_item_stand():
 	if current_item_stand:
 		current_item_stand.queue_free()
 		current_item_stand = null
-
 
 func spawn_enemies():
 	var current_stage = level_manager.current_stage
@@ -154,14 +145,12 @@ func spawn_enemies():
 		
 		add_child(enemy_instance)
 
-
 func _on_enemy_died():
 	count_enemies -= 1
 	if count_enemies == 0:
 		open_all_doors()
 		var position_on_map: Vector2 = level_manager.current_room_position
 		level_manager.map[position_on_map.x][position_on_map.y] = -1 # Зачищенная обычная комната
-
 
 func _on_door_area_body_entered(_body: Spearman, door_name: String) -> void:
 	clear_item_stand()

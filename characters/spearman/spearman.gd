@@ -26,7 +26,6 @@ func _ready():
 	update_damage_label()
 	update_spear_lenght_label()
 
-
 func _process(delta: float):
 	var stick_x = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
 	var stick_y = Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
@@ -45,7 +44,6 @@ func _process(delta: float):
 	camera.rotation.x = clamp(camera.rotation.x, -MAX_VERTICAL_ANGLE, MAX_VERTICAL_ANGLE)
 	rotation.y += current_rotation_x
 
-
 func _physics_process(delta):
 	var direction = Vector2(
 		Input.get_action_strength("back") - Input.get_action_strength("forward"),
@@ -58,7 +56,6 @@ func _physics_process(delta):
 	velocity.z = lerp(velocity.z, direction.y * speed, ACCELERATION * delta)
 	
 	move_and_slide()
- 
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -68,7 +65,6 @@ func _input(event):
 	if event.is_action_pressed("attack"):
 		spear.call("attack")
 
-
 func take_damage(amount: int) -> void:
 	health = max(0, health - amount)
 	if health == 0:
@@ -76,47 +72,37 @@ func take_damage(amount: int) -> void:
 	
 	update_heath_label()
 
-
 func game_over():
 	get_tree().call_deferred("change_scene_to_file", "res://other/game_over.tscn")
-
 
 func update_heath_label():
 	$Hud/Stats/HealthLabel.text = str(health)
 
-
 func update_speed_label():
 	$Hud/Stats/SpeedLabel.text = str(speed / 2.0)
-
 
 func update_damage_label():
 	$Hud/Stats/DamageLabel.text = str(spear.damage / 2.0)
 
-
 func update_spear_lenght_label():
 	$Hud/Stats/SpearLenghtLabel.text = str(spear.lenght / 2.0)
-
 
 func add_health(amount: int = 2):
 	health += amount
 	update_heath_label()
 
-
 func add_speed(amount: int = 2):
 	speed += amount
 	update_speed_label()
-
 
 func add_damage(amount: int = 4):
 	spear.call("set_damage", spear.damage + amount)
 	update_damage_label()
 
-
 func add_spear_lenght(amount: int = 8):
 	spear.lenght += amount
 	spear.scale.x += amount / 20.0
 	update_spear_lenght_label()
-
 
 func pick_item(item_type: String):
 	match item_type:
@@ -133,7 +119,6 @@ func pick_item(item_type: String):
 			return
 	
 	add_item_to_hud("res://textures/" + item_type + ".png")
-
 
 func add_item_to_hud(texture_path: String) -> void:
 	var texture = load(texture_path)

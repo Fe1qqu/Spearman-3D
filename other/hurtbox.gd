@@ -27,7 +27,6 @@ func _ready() -> void:
 	connect("area_entered", self._on_area_entered)
 	connect("area_exited", self._on_area_exited)
 
-
 func _on_area_entered(hitbox: HitBox) -> void:
 	if (hitbox.is_in_group("hitboxes") and not (owner.is_in_group("enemies") and hitbox.owner.is_in_group("enemies")) 
 		and owner.has_method("take_damage")):
@@ -36,23 +35,19 @@ func _on_area_entered(hitbox: HitBox) -> void:
 		if damage_timer.is_stopped():
 			damage_timer.start()
 
-
 func _on_area_exited(hitbox: HitBox) -> void:
 	if hitbox == hitbox_in_area:
 		hitbox_in_area = null
 		damage_timer.stop()
 
-
 func _deal_damage() -> void:
 	_try_deal_damage()
-
 
 func _try_deal_damage() -> void:
 	if not is_invulnerable and hitbox_in_area:
 		owner.take_damage(hitbox_in_area.damage)
 		is_invulnerable = true
 		invulnerability_timer.start()
-
 
 func _end_invulnerability() -> void:
 	is_invulnerable = false

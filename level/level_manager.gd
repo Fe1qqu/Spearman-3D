@@ -45,7 +45,6 @@ func _ready():
 	generate_level()
 	load_room(-1)
 
-
 func generate_level():
 	map = []
 	visible_on_map_rooms = []
@@ -85,7 +84,6 @@ func generate_level():
 	connect_rooms(start_x, start_y, boss_x, boss_y)
 	connect_rooms(start_x, start_y, item_x, item_y)
 
-
 func connect_rooms(x1, y1, x2, y2):
 	var target_room_type = map[x2][y2]
 	
@@ -100,7 +98,6 @@ func connect_rooms(x1, y1, x2, y2):
 	
 	map[x2][y2] = target_room_type
 
-
 func load_room(direction: int):
 	if not room_instance:
 		room_instance = ROOM_SCENE.instantiate()
@@ -112,7 +109,6 @@ func load_room(direction: int):
 	room_instance.set_room_type(room_type, direction)
 	
 	update_minimap()
-
 
 func update_doors_visibility(room_position: Vector2):
 	var neighbors = [
@@ -131,10 +127,8 @@ func update_doors_visibility(room_position: Vector2):
 		else:
 			room_instance.hide_door(i)
 
-
 func is_valid_position(room_position: Vector2) -> bool:
 	return room_position.x >= 0 and room_position.x < MAP_SIZE and room_position.y >= 0 and room_position.y < MAP_SIZE
-
 
 func move_to_room(direction: int):
 	var new_position = current_room_position
@@ -154,10 +148,8 @@ func move_to_room(direction: int):
 		current_room_position = new_position
 		load_room(direction)
 
-
 func update_minimap():
 	room_instance.spearman_instance.get_node("Hud/Minimap").update_map(current_room_position, visible_on_map_rooms)
-
 
 func go_to_next_stage():
 	current_stage += 1
@@ -167,7 +159,6 @@ func go_to_next_stage():
 	
 	generate_level()
 	load_room(-1)
-
 
 func game_won():
 	get_tree().call_deferred("change_scene_to_file", "res://other/game_won.tscn")

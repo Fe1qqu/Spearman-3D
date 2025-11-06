@@ -15,7 +15,6 @@ func _ready() -> void:
 	
 	look_at(spearman.global_position)
 
-
 func _physics_process(delta: float) -> void:
 	var direction = (spearman.global_position - global_position).normalized()
 	velocity = direction * speed * delta
@@ -24,7 +23,6 @@ func _physics_process(delta: float) -> void:
 	rotation.y = lerp_angle(rotation.y, target_rotation, 4 * delta)
 	
 	move_and_slide()
-
 
 func take_damage(amount: int) -> void:
 	health = max(0, health - amount)

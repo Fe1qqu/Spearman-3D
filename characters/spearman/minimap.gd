@@ -45,7 +45,6 @@ func _draw():
 	draw_rect(Rect2(player_position, room_size), Color("#505050")) # Серый
 	draw_rect(Rect2(player_position + Vector2(1, 1), room_size - Vector2(1, 1)), Color.BLACK, false, 1)
 
-
 func update_map(current_room_position: Vector2, visible_on_map_rooms: Array):
 	map = visible_on_map_rooms
 	current_room = current_room_position
