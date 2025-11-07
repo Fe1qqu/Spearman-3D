@@ -163,7 +163,7 @@ func go_to_next_stage():
 		game_won()
 	
 	generate_level()
-	load_room(Room.CLEARED)
-
+	load_room(Direction.NO_DIRECTION)
+ 
 func game_won():
 	get_tree().call_deferred("change_scene_to_file", "res://other/game_won.tscn")

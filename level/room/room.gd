@@ -7,7 +7,7 @@ var spearman_instance: Spearman = null
 
 @onready var doors = [$Doors/DoorTop, $Doors/DoorRight,
 					  $Doors/DoorBottom, $Doors/DoorLeft]
-
+ 
 @onready var spearman_positions = {
 	Direction.UP: Vector3(ROOM_RADIUS, 0, 0),
 	Direction.RIGHT: Vector3(0, 0, ROOM_RADIUS),
@@ -18,7 +18,7 @@ var spearman_instance: Spearman = null
 const Direction = preload("res://utils/direction.gd").Direction
 const Room = preload("res://utils/room_type.gd").Room
 
-const ROOM_RADIUS: float = 8.0
+const ROOM_RADIUS: float = 8.5
 
 # Number of enemies in the room
 var count_enemies: int
@@ -81,10 +81,6 @@ func move_spearman_to_door(from_door_direction: int) -> void:
 	else:
 		# If came through the door, place the Spearman next to the door
 		spearman_instance.position = spearman_positions[from_door_direction]
-		
-		# Turn the Spearman to the center of the room
-		spearman_instance.look_at(Vector3.ZERO)
-		spearman_instance.rotate_y(-PI / 2)
 
 func spawn_boss():
 	var current_stage = level_manager.current_stage
