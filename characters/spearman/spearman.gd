@@ -16,6 +16,8 @@ const JOYSTICK_SENSITIVITY: float = 0.02
 const SMOOTHING: float = 10.0
 const MAX_VERTICAL_ANGLE: float = PI / 2.2
 
+const DISPLAY_SCALE: float = 2.0
+
 @onready var camera = $Camera3D
 @onready var spear = $Spear
  
@@ -79,13 +81,13 @@ func update_heath_label():
 	$Hud/Stats/HealthLabel.text = str(health)
 
 func update_speed_label():
-	$Hud/Stats/SpeedLabel.text = str(speed / 2.0)
+	$Hud/Stats/SpeedLabel.text = str(speed / DISPLAY_SCALE)
 
 func update_damage_label():
-	$Hud/Stats/DamageLabel.text = str(spear.damage / 2.0)
+	$Hud/Stats/DamageLabel.text = str(spear.damage / DISPLAY_SCALE)
 
 func update_spear_lenght_label():
-	$Hud/Stats/SpearLenghtLabel.text = str(spear.lenght / 2.0)
+	$Hud/Stats/SpearLenghtLabel.text = str(spear.lenght / DISPLAY_SCALE)
 
 func add_health(amount: int = 2):
 	health += amount

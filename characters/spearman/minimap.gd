@@ -2,48 +2,51 @@ extends Control
 
 var boss_mark_texture = preload("res://textures/boss_mark.png")
 
-const room_size = Vector2(12, 8) # Размер комнаты на мини-карте
-const spacing = Vector2(10, 6) # Промежутки между комнатами
-const corridor_thickness = 4 # Толщина соединений (коридоров)
-var map = [] # Карта уровня
-var current_room = Vector2(0, 0) # Текущая позиция игрока
+const Room = preload("res://utils/room_type.gd").Room
+
+const ROOM_SIZE = Vector2(12, 8) # Room size on the minimap
+const ROOM_SPACING = Vector2(10, 6) # Spaces between rooms
+const CORRIDOR_THICKNESS = 4 # Thickness of connections (corridors)
+var map = [] # Level map
+var current_room = Vector2(0, 0) # The player's current position
 
 func _draw():
 	var map_size: int = map.size()
 	for x in range(map_size):
 		for y in range(map_size):
 			var room_type = map[x][y]
-			if room_type == 0:
+			if room_type == Room.EMPTY:
 				continue
 			
 			var color: Color
-			if room_type == 4 or room_type == -1:
-				color = Color.GREEN
-			elif room_type == 2:
-				color = Color.YELLOW
-			elif room_type == 1 or room_type == 3:
-				color = Color.RED
+			match room_type:
+				Room.START, Room.CLEARED:
+					color = Color.GREEN
+				Room.ITEM:
+					color = Color.YELLOW
+				Room.DEFAULT, Room.BOSS:
+					color = Color.RED
 			
-			var room_position = Vector2(y, x) * (room_size + spacing)
-			draw_rect(Rect2(room_position, room_size), color)
-			draw_rect(Rect2(room_position + Vector2(1, 1), room_size - Vector2(1, 1)), Color.BLACK, false, 1)
+			var room_position = Vector2(y, x) * (ROOM_SIZE + ROOM_SPACING)
+			draw_rect(Rect2(room_position, ROOM_SIZE), color)
+			draw_rect(Rect2(room_position + Vector2(1, 1), ROOM_SIZE - Vector2(1, 1)), Color.BLACK, false, 1)
 			
 			if y < map_size - 1 and map[x][y + 1] != 0:
-				# Горизонтальный коридор к соседу справа
-				var corridor_pos = room_position + Vector2(room_size.x, (room_size.y - corridor_thickness) / 2)
-				draw_rect(Rect2(corridor_pos, Vector2(spacing.x, 4)), Color.BLACK)
+				# Horizontal corridor to the neighbor on the right
+				var corridor_pos = room_position + Vector2(ROOM_SIZE.x, (ROOM_SIZE.y - CORRIDOR_THICKNESS) / 2)
+				draw_rect(Rect2(corridor_pos, Vector2(ROOM_SPACING.x, 4)), Color.BLACK)
 			
 			if x < map_size - 1 and map[x + 1][y] != 0:
-				# Вертикальный коридор к соседу снизу
-				var corridor_pos = room_position + Vector2((room_size.x - corridor_thickness) / 2, room_size.y)
-				draw_rect(Rect2(corridor_pos, Vector2(corridor_thickness, spacing.y)), Color.BLACK)
+				# Vertical corridor to the neighbor below
+				var corridor_pos = room_position + Vector2((ROOM_SIZE.x - CORRIDOR_THICKNESS) / 2, ROOM_SIZE.y)
+				draw_rect(Rect2(corridor_pos, Vector2(CORRIDOR_THICKNESS, ROOM_SPACING.y)), Color.BLACK)
 			
-			if room_type == 3:
+			if room_type == Room.BOSS:
 				draw_texture(boss_mark_texture, room_position + Vector2(1, 2))
 	
-	var player_position = Vector2(current_room.y, current_room.x) * (room_size + spacing)
-	draw_rect(Rect2(player_position, room_size), Color("#505050")) # Серый
-	draw_rect(Rect2(player_position + Vector2(1, 1), room_size - Vector2(1, 1)), Color.BLACK, false, 1)
+	var player_position = Vector2(current_room.y, current_room.x) * (ROOM_SIZE + ROOM_SPACING)
+	draw_rect(Rect2(player_position, ROOM_SIZE), Color("#505050"))
+	draw_rect(Rect2(player_position + Vector2(1, 1), ROOM_SIZE - Vector2(1, 1)), Color.BLACK, false, 1)
 
 func update_map(current_room_position: Vector2, visible_on_map_rooms: Array):
 	map = visible_on_map_rooms

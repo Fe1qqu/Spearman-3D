@@ -10,14 +10,14 @@ var invulnerability_timer: Timer = Timer.new()
 var is_invulnerable: bool = false
 
 func _ready() -> void:
-	# Настройка таймера для интервала урона
+	# Setting up a timer for the damage interval
 	damage_timer.wait_time = damage_interval
 	damage_timer.one_shot = false
 	damage_timer.autostart = false
 	add_child(damage_timer)
 	damage_timer.connect("timeout", self._deal_damage)
 	
-	# Настройка таймера для неуязвимости
+	# Setting a timer for invulnerability
 	invulnerability_timer.wait_time = invulnerability_time
 	invulnerability_timer.one_shot = true
 	invulnerability_timer.autostart = false

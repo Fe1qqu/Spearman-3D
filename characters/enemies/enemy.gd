@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed = 3.0
+@export var speed: float = 3.0
 @export var health: int = 100
 
 @export var spearman: Spearman

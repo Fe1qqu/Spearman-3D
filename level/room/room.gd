@@ -9,37 +9,42 @@ var spearman_instance: Spearman = null
 					  $Doors/DoorBottom, $Doors/DoorLeft]
 
 @onready var spearman_positions = {
-					0: Vector3(8, 0, 0), # Верхняя дверь
-					1: Vector3(0, 0, 8), # Правая дверь
-					2: Vector3(-8, 0, 0), # Нижняя дверь
-					3: Vector3(0, 0, -8), # Левая дверь
-				}
+	Direction.UP: Vector3(ROOM_RADIUS, 0, 0),
+	Direction.RIGHT: Vector3(0, 0, ROOM_RADIUS),
+	Direction.DOWN: Vector3(-ROOM_RADIUS, 0, 0),
+	Direction.LEFT: Vector3(0, 0, -ROOM_RADIUS)
+}
 
-# Количество противников в комнате
+const Direction = preload("res://utils/direction.gd").Direction
+const Room = preload("res://utils/room_type.gd").Room
+
+const ROOM_RADIUS: float = 8.0
+
+# Number of enemies in the room
 var count_enemies: int
 
 var current_item_stand: Node = null
 
 func set_room_type(type: int, from_door_index: int):
 	if not spearman_instance:
-			spearman_instance = spearman.instantiate()
-			add_child(spearman_instance)
+		spearman_instance = spearman.instantiate()
+		add_child(spearman_instance)
 	
 	move_spearman_to_door(from_door_index)
 	
 	match type:
-		4: # Стартовая комната
+		Room.START:
 			open_all_doors()
-		3: # Комната с боссом
+		Room.BOSS:
 			close_all_doors()
 			spawn_boss()
-		2: # Комната с предметом
+		Room.ITEM:
 			open_all_doors()
 			spawn_item()
-		1: # Обычная комната
+		Room.DEFAULT:
 			close_all_doors()
 			spawn_enemies()
-		-1: # Зачищенная обычная комната
+		Room.CLEARED:
 			open_all_doors()
 
 func show_door(index):
@@ -48,7 +53,6 @@ func show_door(index):
 func hide_door(index):
 	doors[index].visible = false
 
-# Метод для изменения состояния двери
 func set_door_state(index: int, is_open: bool):
 	var door = doors[index]
 	var collision_shape = door.get_node("Area3D").get_node("CollisionShape3D")
@@ -60,24 +64,25 @@ func set_door_state(index: int, is_open: bool):
 		door.texture = load("res://textures/door_closed.png")
 		collision_shape.set_deferred("disabled", true)
 
-# Закрываем все двери
 func close_all_doors():
 	for i in range(doors.size()):
 		if doors[i].visible:
 			set_door_state(i, false)
 
-# Открываем все двери
 func open_all_doors():
 	for i in range(doors.size()):
 		if doors[i].visible:
 			set_door_state(i, true)
 
-func move_spearman_to_door(from_door_index: int):
-	var spearman_position = Vector3.ZERO if from_door_index == -1 else spearman_positions[from_door_index]
-	spearman_instance.position = spearman_position
-	
-	# Устанавливаем направление взгляда, если это не стартовая позиция
-	if from_door_index != -1:
+func move_spearman_to_door(from_door_direction: int) -> void:
+	if from_door_direction == Direction.NO_DIRECTION:
+		# Starting position: Spearman in the center of the room
+		spearman_instance.position = Vector3.ZERO
+	else:
+		# If came through the door, place the Spearman next to the door
+		spearman_instance.position = spearman_positions[from_door_direction]
+		
+		# Turn the Spearman to the center of the room
 		spearman_instance.look_at(Vector3.ZERO)
 		spearman_instance.rotate_y(-PI / 2)
 
@@ -114,7 +119,7 @@ func spawn_item():
 	current_item_stand = item_stand_instance
 	
 	var position_on_map: Vector2 = level_manager.current_room_position
-	level_manager.map[position_on_map.x][position_on_map.y] = -1 # Зачищенная обычная комната
+	level_manager.map[position_on_map.x][position_on_map.y] = Room.CLEARED
 	
 	add_child(item_stand_instance)
 
@@ -150,22 +155,22 @@ func _on_enemy_died():
 	if count_enemies == 0:
 		open_all_doors()
 		var position_on_map: Vector2 = level_manager.current_room_position
-		level_manager.map[position_on_map.x][position_on_map.y] = -1 # Зачищенная обычная комната
+		level_manager.map[position_on_map.x][position_on_map.y] = Room.CLEARED
 
 func _on_door_area_body_entered(_body: Spearman, door_name: String) -> void:
 	clear_item_stand()
 	
-	var direction: int = -1
+	var direction = Direction.NO_DIRECTION
 	
 	match door_name:
-		"DoorTop":
-			direction = 0 # Вверх
-		"DoorRight":
-			direction = 1 # Вправо
-		"DoorBottom":
-			direction = 2 # Вниз
-		"DoorLeft":
-			direction = 3 # Влево
+		"DoorTop": 
+			direction = Direction.UP
+		"DoorRight": 
+			direction = Direction.RIGHT
+		"DoorBottom": 
+			direction = Direction.DOWN
+		"DoorLeft": 
+			direction = Direction.LEFT
 		"DoorBoss":
 			set_boss_door_state(false)
 			$Doors/DoorBoss.visible = false

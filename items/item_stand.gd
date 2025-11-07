@@ -1,6 +1,6 @@
 extends Area3D
 
-var current_item_name: String = ""
+var current_item_name: String
 
 var item_scenes = {
 	"dumbbell": preload("res://items/dumbbell.glb"),

@@ -1,7 +1,7 @@
 extends Node3D
 
 var damage: int = 10
-var lenght: int = 20 # Только для отображения в HUD 
+var lenght: int = 20 # For display in HUD only
 
 func _ready() -> void:
 	set_damage(damage)
