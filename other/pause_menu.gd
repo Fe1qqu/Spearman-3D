@@ -28,4 +28,6 @@ func _on_resume_button_pressed() -> void:
 	resume_game()
 
 func _on_quit_button_pressed() -> void:
-	get_tree().quit()
+	get_tree().paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	get_tree().change_scene_to_file("res://other/main_menu.tscn")

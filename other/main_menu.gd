@@ -1,13 +1,16 @@
 extends Control
 
-var hello_screen_active: bool = true
-
 func _ready() -> void:
-	$TextureRect.texture = load("res://textures/hello_screen.png")
-	$MarginContainer.hide()
+	if Global.show_hello_screen:
+		$TextureRect.texture = load("res://textures/hello_screen.png")
+		$MarginContainer.hide()
+	else:
+		$TextureRect.texture = load("res://textures/main_menu_screen.png")
+		$MarginContainer.show()
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and hello_screen_active:
+	if event is InputEventKey and event.pressed and Global.show_hello_screen:
+		Global.show_hello_screen = false
 		$TextureRect.texture = load("res://textures/main_menu_screen.png")
 		$MarginContainer.show()
 

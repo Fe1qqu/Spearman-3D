@@ -11,10 +11,14 @@ config_version=5
 [application]
 
 config/name="Spearman 3D"
-run/main_scene="res://other/main_menu.tscn"
+run/main_scene="uid://bdbnckl76qwoi"
 config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/show_image=false
 config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://Global.gd"
 
 [global_group]
 
