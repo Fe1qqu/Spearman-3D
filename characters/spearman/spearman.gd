@@ -16,8 +16,6 @@ const JOYSTICK_SENSITIVITY: float = 0.02
 const SMOOTHING: float = 10.0
 const MAX_VERTICAL_ANGLE: float = PI / 2.2
 
-const DISPLAY_SCALE: float = 2.0
-
 @onready var camera = $Camera3D
 @onready var spear = $Spear
 @onready var hud: Control = $Hud
