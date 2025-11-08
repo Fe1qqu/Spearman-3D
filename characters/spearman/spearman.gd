@@ -20,13 +20,14 @@ const DISPLAY_SCALE: float = 2.0
 
 @onready var camera = $Camera3D
 @onready var spear = $Spear
- 
+@onready var hud: Control = $Hud
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	update_heath_label()
-	update_speed_label()
-	update_damage_label()
-	update_spear_lenght_label()
+	hud.update_health(health)
+	hud.update_speed(speed)
+	hud.update_damage(spear.damage)
+	hud.update_spear_length(spear.lenght)
 
 func _process(delta: float):
 	var stick_x = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
@@ -72,39 +73,27 @@ func take_damage(amount: int) -> void:
 	if health == 0:
 		game_over()
 	
-	update_heath_label()
+	hud.update_health(health)
 
 func game_over():
 	get_tree().call_deferred("change_scene_to_file", "res://other/game_over.tscn")
 
-func update_heath_label():
-	$Hud/Stats/HealthLabel.text = str(health)
-
-func update_speed_label():
-	$Hud/Stats/SpeedLabel.text = str(speed / DISPLAY_SCALE)
-
-func update_damage_label():
-	$Hud/Stats/DamageLabel.text = str(spear.damage / DISPLAY_SCALE)
-
-func update_spear_lenght_label():
-	$Hud/Stats/SpearLenghtLabel.text = str(spear.lenght / DISPLAY_SCALE)
-
 func add_health(amount: int = 2):
 	health += amount
-	update_heath_label()
+	hud.update_health(health)
 
 func add_speed(amount: int = 2):
 	speed += amount
-	update_speed_label()
+	hud.update_speed(speed)
 
 func add_damage(amount: int = 4):
 	spear.call("set_damage", spear.damage + amount)
-	update_damage_label()
+	hud.update_damage(spear.damage)
 
 func add_spear_lenght(amount: int = 8):
 	spear.lenght += amount
 	spear.scale.x += amount / 20.0
-	update_spear_lenght_label()
+	hud.update_spear_length(spear.lenght)
 
 func pick_item(item_type: String):
 	match item_type:
@@ -120,15 +109,4 @@ func pick_item(item_type: String):
 			print("Unknown item type:", item_type)
 			return
 	
-	add_item_to_hud("res://textures/" + item_type + ".png")
-
-func add_item_to_hud(texture_path: String) -> void:
-	var texture = load(texture_path)
-	if not texture:
-		print("Failed to load texture:", texture_path)
-		return
-	
-	var item_icon = TextureRect.new()
-	item_icon.texture = texture
-	
-	$Hud/ItemsGridContainer.add_child(item_icon)
+	hud.add_item("res://textures/" + item_type + ".png")
