@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b3ibbb205dmm2"
-path="res://.godot/imported/stick_rope.glb-c4584ee50306145235c4a79e6d82f358.scn"
+uid="uid://c5jcbpbjs7bem"
+path="res://.godot/imported/stick_tape.glb-36121bdd7131dbe5e0117711d45c31b1.scn"
 
 [deps]
 
-source_file="res://items/stick_rope.glb"
-dest_files=["res://.godot/imported/stick_rope.glb-c4584ee50306145235c4a79e6d82f358.scn"]
+source_file="res://items/stick_tape.glb"
+dest_files=["res://.godot/imported/stick_tape.glb-36121bdd7131dbe5e0117711d45c31b1.scn"]
 
 [params]
 
@@ -38,5 +38,5 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={}
-gltf/naming_version=1
+gltf/naming_version=2
 gltf/embedded_image_handling=1

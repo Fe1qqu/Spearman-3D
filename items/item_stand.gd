@@ -6,7 +6,7 @@ var item_scenes = {
 	"dumbbell": preload("res://items/dumbbell.glb"),
 	"hearth": preload("res://items/hearth.glb"),
 	"lightning": preload("res://items/lightning.glb"),
-	"stick_rope": preload("res://items/stick_rope.glb")
+	"stick_tape": preload("res://items/stick_tape.glb")
 }
 
 signal item_picked

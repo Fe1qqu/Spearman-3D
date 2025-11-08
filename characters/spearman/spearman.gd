@@ -101,7 +101,7 @@ func pick_item(item_type: String):
 			add_health()
 		"lightning":
 			add_speed()
-		"stick_rope":
+		"stick_tape":
 			add_spear_lenght()
 		"dumbbell":
 			add_damage()
