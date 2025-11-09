@@ -16,8 +16,8 @@ const JOYSTICK_SENSITIVITY: float = 0.02
 const SMOOTHING: float = 10.0
 const MAX_VERTICAL_ANGLE: float = PI / 2.2
 
-@onready var camera = $Camera3D
-@onready var spear = $Spear
+@onready var camera: Camera3D = $Camera3D
+@onready var spear: Node3D = $Spear
 @onready var hud: Control = $Hud
 
 func _ready() -> void:
