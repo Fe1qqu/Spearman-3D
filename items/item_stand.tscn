@@ -94,7 +94,7 @@ shape = SubResource("CylinderShape3D_oag1u")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_1f4jp")
+&"": SubResource("AnimationLibrary_1f4jp")
 }
 
 [connection signal="body_entered" from="." to="." method="_on_spearman_entered"]

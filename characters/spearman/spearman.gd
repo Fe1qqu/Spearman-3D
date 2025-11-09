@@ -16,20 +16,20 @@ const JOYSTICK_SENSITIVITY: float = 0.02
 const SMOOTHING: float = 10.0
 const MAX_VERTICAL_ANGLE: float = PI / 2.2
 
-@onready var camera = $Camera3D
-@onready var spear = $Spear
- 
-func _ready():
+@onready var camera: Camera3D = $Camera3D
+@onready var spear: Node3D = $Spear
+@onready var hud: Control = $Hud
+
+func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	update_heath_label()
-	update_speed_label()
-	update_damage_label()
-	update_spear_lenght_label()
+	hud.update_health(health)
+	hud.update_speed(speed)
+	hud.update_damage(spear.damage)
+	hud.update_spear_length(spear.lenght)
 
-
-func _process(delta: float):
-	var stick_x = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
-	var stick_y = Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
+func _process(delta: float) -> void:
+	var stick_x: float = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
+	var stick_y: float = Input.get_action_strength("look_down") - Input.get_action_strength("look_up")
 	
 	if abs(stick_x) > 0 or abs(stick_y) > 0:
 		input_rotation_x = -stick_x * JOYSTICK_SENSITIVITY
@@ -45,9 +45,8 @@ func _process(delta: float):
 	camera.rotation.x = clamp(camera.rotation.x, -MAX_VERTICAL_ANGLE, MAX_VERTICAL_ANGLE)
 	rotation.y += current_rotation_x
 
-
-func _physics_process(delta):
-	var direction = Vector2(
+func _physics_process(delta: float) -> void:
+	var direction: Vector2 = Vector2(
 		Input.get_action_strength("back") - Input.get_action_strength("forward"),
 		Input.get_action_strength("left") - Input.get_action_strength("right")
 	).normalized()
@@ -58,9 +57,8 @@ func _physics_process(delta):
 	velocity.z = lerp(velocity.z, direction.y * speed, ACCELERATION * delta)
 	
 	move_and_slide()
- 
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		input_rotation_x = -deg_to_rad(event.relative.x) * MOUSE_SENSITIVITY
 		input_rotation_y = -deg_to_rad(event.relative.y) * MOUSE_SENSITIVITY
@@ -68,63 +66,40 @@ func _input(event):
 	if event.is_action_pressed("attack"):
 		spear.call("attack")
 
-
 func take_damage(amount: int) -> void:
 	health = max(0, health - amount)
 	if health == 0:
 		game_over()
 	
-	update_heath_label()
+	hud.update_health(health)
 
-
-func game_over():
+func game_over() -> void:
 	get_tree().call_deferred("change_scene_to_file", "res://other/game_over.tscn")
 
-
-func update_heath_label():
-	$Hud/Stats/HealthLabel.text = str(health)
-
-
-func update_speed_label():
-	$Hud/Stats/SpeedLabel.text = str(speed / 2.0)
-
-
-func update_damage_label():
-	$Hud/Stats/DamageLabel.text = str(spear.damage / 2.0)
-
-
-func update_spear_lenght_label():
-	$Hud/Stats/SpearLenghtLabel.text = str(spear.lenght / 2.0)
-
-
-func add_health(amount: int = 2):
+func add_health(amount: int = 2) -> void:
 	health += amount
-	update_heath_label()
+	hud.update_health(health)
 
-
-func add_speed(amount: int = 2):
+func add_speed(amount: int = 2) -> void:
 	speed += amount
-	update_speed_label()
+	hud.update_speed(speed)
 
-
-func add_damage(amount: int = 4):
+func add_damage(amount: int = 4) -> void:
 	spear.call("set_damage", spear.damage + amount)
-	update_damage_label()
+	hud.update_damage(spear.damage)
 
-
-func add_spear_lenght(amount: int = 8):
+func add_spear_lenght(amount: int = 8) -> void:
 	spear.lenght += amount
-	spear.scale.x += amount / 20.0
-	update_spear_lenght_label()
+	spear.scale.x += amount / 100.0
+	hud.update_spear_length(spear.lenght)
 
-
-func pick_item(item_type: String):
+func pick_item(item_type: String) -> void:
 	match item_type:
 		"hearth":
 			add_health()
 		"lightning":
 			add_speed()
-		"stick_rope":
+		"stick_tape":
 			add_spear_lenght()
 		"dumbbell":
 			add_damage()
@@ -132,16 +107,4 @@ func pick_item(item_type: String):
 			print("Unknown item type:", item_type)
 			return
 	
-	add_item_to_hud("res://textures/" + item_type + ".png")
-
-
-func add_item_to_hud(texture_path: String) -> void:
-	var texture = load(texture_path)
-	if not texture:
-		print("Failed to load texture:", texture_path)
-		return
-	
-	var item_icon = TextureRect.new()
-	item_icon.texture = texture
-	
-	$Hud/ItemsGridContainer.add_child(item_icon)
+	hud.add_item("res://textures/" + item_type + ".png")
