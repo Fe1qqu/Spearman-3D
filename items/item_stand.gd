@@ -2,8 +2,8 @@ extends Area3D
 
 @onready var item: Node3D = $Item
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var collision_shape: CollisionShape3D = $Stand/StaticBody3D/CollisionShape3D
-
+@onready var collision_shape: CollisionShape3D = $CollisionShape3D
+ 
 var current_item_name: String
 
 var item_scenes: Dictionary[String, PackedScene] = {
