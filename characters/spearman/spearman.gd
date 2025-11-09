@@ -90,7 +90,7 @@ func add_damage(amount: int = 4) -> void:
 
 func add_spear_lenght(amount: int = 8) -> void:
 	spear.lenght += amount
-	spear.scale.x += amount / 20.0
+	spear.scale.x += amount / 100.0
 	hud.update_spear_length(spear.lenght)
 
 func pick_item(item_type: String) -> void:
