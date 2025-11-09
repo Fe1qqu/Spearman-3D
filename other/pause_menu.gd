@@ -1,7 +1,9 @@
 extends Control
 
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
 func _ready() -> void:
-	$AnimationPlayer.play("RESET")
+	animation_player.play("RESET")
 
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("pause"):
@@ -17,7 +19,7 @@ func pause_game() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	get_tree().paused = true
 	show()
-	$AnimationPlayer.play("blur")
+	animation_player.play("blur")
 
 func resume_game() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

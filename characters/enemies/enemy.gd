@@ -2,10 +2,9 @@ extends CharacterBody3D
 
 @export var speed: float = 3.0
 @export var health: int = 100
-
 @export var spearman: Spearman
 
-@onready var health_bar = $Sprite3D/SubViewport/HealthBar3D
+@onready var health_bar: ProgressBar = $Sprite3D/SubViewport/HealthBar3D
 
 func _ready() -> void:
 	health_bar.max_value = health
@@ -16,10 +15,10 @@ func _ready() -> void:
 	look_at(spearman.global_position)
 
 func _physics_process(delta: float) -> void:
-	var direction = (spearman.global_position - global_position).normalized()
+	var direction: Vector3 = (spearman.global_position - global_position).normalized()
 	velocity = direction * speed * delta
 	
-	var target_rotation = atan2(-direction.x, -direction.z)
+	var target_rotation: float = atan2(-direction.x, -direction.z)
 	rotation.y = lerp_angle(rotation.y, target_rotation, 4 * delta)
 	
 	move_and_slide()

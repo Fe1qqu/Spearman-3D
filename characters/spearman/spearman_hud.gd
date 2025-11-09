@@ -21,10 +21,10 @@ func update_spear_length(length: int) -> void:
 	spear_length_label.text = str(int(length / DISPLAY_SCALE))
 
 func add_item(texture_path: String) -> void:
-	var texture = load(texture_path)
+	var texture: Texture2D = load(texture_path)
 	if not texture:
 		print("Failed to load texture:", texture_path)
 		return
-	var item_icon = TextureRect.new()
+	var item_icon: TextureRect = TextureRect.new()
 	item_icon.texture = texture
 	items_grid_container.add_child(item_icon)

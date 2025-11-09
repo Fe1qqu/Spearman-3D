@@ -28,8 +28,8 @@ func _ready() -> void:
 	connect("area_exited", self._on_area_exited)
 
 func _on_area_entered(hitbox: HitBox) -> void:
-	if (hitbox.is_in_group("hitboxes") and not (owner.is_in_group("enemies") and hitbox.owner.is_in_group("enemies")) 
-		and owner.has_method("take_damage")):
+	if (hitbox.is_in_group("hitboxes") and not (owner.is_in_group("enemies") 
+		and hitbox.owner.is_in_group("enemies")) and owner.has_method("take_damage")):
 		hitbox_in_area = hitbox
 		_try_deal_damage()
 		if damage_timer.is_stopped():
