@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cq21cvvwewgn7"]
+[gd_scene load_steps=9 format=3 uid="uid://cq21cvvwewgn7"]
 
 [ext_resource type="PackedScene" uid="uid://di5a0c7vlv4et" path="res://characters/spearman/spear.glb" id="1_0ureu"]
 [ext_resource type="Script" uid="uid://c3c2qwucdkq4t" path="res://characters/spearman/spear.gd" id="2_ss4yw"]
 [ext_resource type="PackedScene" uid="uid://bd4kvg57bljs7" path="res://other/hitbox.tscn" id="3_wo4qe"]
+[ext_resource type="AudioStream" uid="uid://bx7t46ifx3uhx" path="res://sounds/spear_swish.wav" id="4_3fplm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t1hjl"]
 radius = 0.811279
@@ -33,6 +34,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackAudioStreamPlayer3D:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_5hbfd"]
 resource_name = "attack"
@@ -61,6 +74,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AttackAudioStreamPlayer3D:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gt7b5"]
 _data = {
@@ -81,7 +106,12 @@ transform = Transform3D(5.27979, 0, 0, 0, 5.27979, 0, 0, 0, 5.27979, 1.02877, 57
 shape = SubResource("CapsuleShape3D_t1hjl")
 disabled = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+[node name="AttackAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3307314, 0.71103406, -0.31371197)
+stream = ExtResource("4_3fplm")
+volume_db = -16.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 libraries = {
 &"": SubResource("AnimationLibrary_gt7b5")
 }
