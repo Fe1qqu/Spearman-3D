@@ -11,7 +11,6 @@ var input_rotation_y: float = 0.0
 var current_rotation_x: float = 0.0
 var current_rotation_y: float = 0.0
 
-const MOUSE_SENSITIVITY: float = 0.1
 const JOYSTICK_SENSITIVITY: float = 0.02
 const SMOOTHING: float = 10.0
 const MAX_VERTICAL_ANGLE: float = PI / 2.2
@@ -19,6 +18,7 @@ const MAX_VERTICAL_ANGLE: float = PI / 2.2
 @onready var camera: Camera3D = $Camera3D
 @onready var spear: Node3D = $Spear
 @onready var hud: Control = $Hud
+@onready var take_damage_audio_stream_player: AudioStreamPlayer3D = $TakeDamageAudioStreamPlayer3D
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -60,8 +60,8 @@ func _physics_process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		input_rotation_x = -deg_to_rad(event.relative.x) * MOUSE_SENSITIVITY
-		input_rotation_y = -deg_to_rad(event.relative.y) * MOUSE_SENSITIVITY
+		input_rotation_x = -deg_to_rad(event.relative.x) * Settings.mouse_sensitivity
+		input_rotation_y = -deg_to_rad(event.relative.y) * Settings.mouse_sensitivity
 	
 	if event.is_action_pressed("attack"):
 		spear.call("attack")
@@ -70,6 +70,8 @@ func take_damage(amount: int) -> void:
 	health = max(0, health - amount)
 	if health == 0:
 		game_over()
+	
+	take_damage_audio_stream_player.playing = true
 	
 	hud.update_health(health)
 
