@@ -1,18 +1,20 @@
+class_name LevelManager
 extends Node3D
+
+signal room_changed(new_position, visible_map)
 
 var current_stage: int = 0 # Current floor
 const MAX_STAGE: int = 4
 const MAP_SIZE: int = 6 # Map size (6x6 rooms)
 
-const ROOM_SCENE = preload("res://level/room/room.tscn")
+const ROOM_SCENE: PackedScene = preload("res://level/room/room.tscn")
 const Direction = preload("res://utils/direction.gd").Direction
 const Room = preload("res://utils/room_type.gd").Room
 
 var map: Array = [] # Level map
+var visible_on_map_rooms: Array = [] # An array for storing visited rooms and their neighbors
 var current_room_position: Vector2 = Vector2(0, 0) # Current position on the map
 var room_instance: Node3D = null
-
-var visible_on_map_rooms: Array = [] # An array for storing visited rooms and their neighbors
 
 var enemy_scenes: Array[PackedScene] = [
 	preload("res://characters/enemies/enemy1/enemy1.tscn"),
@@ -56,8 +58,8 @@ func generate_level() -> void:
 		map.append([])
 		visible_on_map_rooms.append([])
 		for j in range(MAP_SIZE):
-			map[i].append(0)
-			visible_on_map_rooms[i].append(0)
+			map[i].append(Room.EMPTY)
+			visible_on_map_rooms[i].append(Room.EMPTY)
 	
 	var start_x: int = randi() % MAP_SIZE
 	var start_y: int = randi() % MAP_SIZE
@@ -87,7 +89,7 @@ func generate_level() -> void:
 	connect_rooms(start_x, start_y, item_x, item_y)
 
 func connect_rooms(x1: int, y1: int, x2: int, y2: int) -> void:
-	var target_room_type: int = map[x2][y2]
+	var target_room_type: Room = map[x2][y2]
 	
 	while x1 != x2 or y1 != y2:
 		if randf() < 0.5 and x1 != x2:
@@ -95,22 +97,22 @@ func connect_rooms(x1: int, y1: int, x2: int, y2: int) -> void:
 		elif y1 != y2:
 			y1 += sign(y2 - y1)
 		
-		if map[x1][y1] == 0:
+		if map[x1][y1] == Room.EMPTY:
 			map[x1][y1] = Room.DEFAULT # Normal room with enemies
 	
 	map[x2][y2] = target_room_type
 
-func load_room(direction: int) -> void:
+func load_room(direction: Direction) -> void:
 	if not room_instance:
 		room_instance = ROOM_SCENE.instantiate()
 		add_child(room_instance)
 	
 	update_doors_visibility(current_room_position)
 	
-	var room_type: int = map[current_room_position.x][current_room_position.y]
+	var room_type: Room = map[current_room_position.x][current_room_position.y]
 	room_instance.set_room_type(room_type, direction)
 	
-	update_minimap()
+	emit_signal("room_changed", current_room_position, visible_on_map_rooms)
 
 func update_doors_visibility(room_position: Vector2) -> void:
 	var neighbors: Array[Vector2] = [
@@ -121,7 +123,7 @@ func update_doors_visibility(room_position: Vector2) -> void:
 	]
 	
 	for i in range(4):
-		if is_valid_position(neighbors[i]) and map[neighbors[i].x][neighbors[i].y] != 0:
+		if is_valid_position(neighbors[i]) and map[neighbors[i].x][neighbors[i].y] != Room.EMPTY:
 			room_instance.show_door(i)
 			
 			# Mark neighbors as possible to visit
@@ -132,7 +134,7 @@ func update_doors_visibility(room_position: Vector2) -> void:
 func is_valid_position(room_position: Vector2) -> bool:
 	return room_position.x >= 0 and room_position.x < MAP_SIZE and room_position.y >= 0 and room_position.y < MAP_SIZE
 
-func move_to_room(direction: int) -> void:
+func move_to_room(direction: Direction) -> void:
 	var new_position: Vector2 = current_room_position
 	
 	match direction:
@@ -147,12 +149,9 @@ func move_to_room(direction: int) -> void:
 		_:
 			return
 	
-	if is_valid_position(new_position) and map[new_position.x][new_position.y] != 0:
+	if is_valid_position(new_position) and map[new_position.x][new_position.y] != Room.EMPTY:
 		current_room_position = new_position
 		load_room(direction)
-
-func update_minimap() -> void:
-	room_instance.spearman_instance.get_node("Hud/Minimap").update_map(current_room_position, visible_on_map_rooms)
 
 func go_to_next_stage() -> void:
 	current_stage += 1
