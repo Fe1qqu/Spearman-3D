@@ -1,0 +1,127 @@
+[gd_scene load_steps=6 format=3 uid="uid://kb353b5ldnkr"]
+
+[ext_resource type="Script" uid="uid://bvehjys8eu2qw" path="res://other/settings_menu.gd" id="1_u1txr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u1txr"]
+font_size = 80
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_58ibj"]
+font_size = 20
+font_color = Color(0, 0, 0, 1)
+outline_size = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_7t0yd"]
+font_size = 24
+font_color = Color(1, 1, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_nec83"]
+font_size = 20
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u1txr")
+
+[node name="BackgroundColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.5019608, 0, 0.5019608, 1)
+
+[node name="SettingsLabel" type="Label" parent="BackgroundColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Настройки"
+label_settings = SubResource("LabelSettings_u1txr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SensitivityLabel" type="Label" parent="BackgroundColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -219.5
+offset_top = -81.095
+offset_right = 219.5008
+offset_bottom = 28.90509
+grow_horizontal = 2
+grow_vertical = 2
+text = "Чувствительность мыши"
+label_settings = SubResource("LabelSettings_58ibj")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ReturnLabel" type="Label" parent="BackgroundColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -219.5
+offset_top = -110.0
+offset_right = 219.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press \"Q\" to return"
+label_settings = SubResource("LabelSettings_7t0yd")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SensitivitySlider" type="HSlider" parent="BackgroundColorRect"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -161.32501
+offset_top = -8.0
+offset_right = 138.67505
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+min_value = 0.01
+max_value = 1.0
+step = 0.01
+value = 0.09999999999999999
+
+[node name="SensitivityValueLabel" type="Label" parent="BackgroundColorRect/SensitivitySlider"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 8.60495
+offset_top = -16.42
+offset_right = 37.60495
+offset_bottom = 11.58
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "0.1"
+label_settings = SubResource("LabelSettings_nec83")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="value_changed" from="BackgroundColorRect/SensitivitySlider" to="." method="_on_sensitivity_slider_value_changed"]
