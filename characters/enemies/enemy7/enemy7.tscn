@@ -1,19 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://cisgeqdnqsmqq"]
+[gd_scene load_steps=6 format=3 uid="uid://cisgeqdnqsmqq"]
 
 [ext_resource type="PackedScene" uid="uid://bbrj2x2m4wrvb" path="res://characters/enemies/enemy.tscn" id="1_eng31"]
 [ext_resource type="PackedScene" uid="uid://dbflf8xo2j5qt" path="res://characters/enemies/enemy7/enemy7.glb" id="2_qsifr"]
+[ext_resource type="Script" uid="uid://4gkxubetvan0" path="res://characters/enemies/enemy7/boss.gd" id="2_us7md"]
+[ext_resource type="PackedScene" uid="uid://kdmfs2bo07h4" path="res://projectiles/fireball.tscn" id="3_acebe"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_jsnsl"]
 viewport_path = NodePath("Sprite3D/SubViewport")
 
 [node name="Enemy7" instance=ExtResource("1_eng31")]
+script = ExtResource("2_us7md")
+fireball_scene = ExtResource("3_acebe")
+fireball_delay = 5.0
 speed = 9.0
 health = 1000
 
 [node name="Mesh" parent="." index="0" instance=ExtResource("2_qsifr")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
 
-[node name="Sprite3D" parent="." index="4"]
+[node name="Sprite3D" parent="." index="5"]
 texture = SubResource("ViewportTexture_jsnsl")
 
 [editable path="Hitbox"]

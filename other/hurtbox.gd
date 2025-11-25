@@ -46,6 +46,7 @@ func _deal_damage() -> void:
 func _try_deal_damage() -> void:
 	if not is_invulnerable and hitbox_in_area:
 		owner.take_damage(hitbox_in_area.damage)
+		hitbox_in_area.emit_signal("hit_target", owner)
 		is_invulnerable = true
 		invulnerability_timer.start()
 
