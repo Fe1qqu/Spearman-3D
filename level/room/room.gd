@@ -27,14 +27,14 @@ var count_enemies: int
 
 var current_item_stand: Node = null
 
-func set_room_type(type: int, from_door_index: int) -> void:
+func set_room_type(room_type: Room, from_door_direction: Direction) -> void:
 	if not spearman_instance:
 		spearman_instance = spearman.instantiate()
 		add_child(spearman_instance)
 	
-	move_spearman_to_door(from_door_index)
+	move_spearman_to_door(from_door_direction)
 	
-	match type:
+	match room_type:
 		Room.START:
 			open_all_doors()
 		Room.BOSS:
@@ -76,7 +76,7 @@ func open_all_doors() -> void:
 		if doors[i].visible:
 			set_door_state(i, true)
 
-func move_spearman_to_door(from_door_direction: int) -> void:
+func move_spearman_to_door(from_door_direction: Direction) -> void:
 	if from_door_direction == Direction.NO_DIRECTION:
 		# Starting position: Spearman in the center of the room
 		spearman_instance.position = Vector3.ZERO
@@ -157,7 +157,7 @@ func _on_enemy_died() -> void:
 func _on_door_area_body_entered(_body: Spearman, door_name: String) -> void:
 	clear_item_stand()
 	
-	var direction: int = Direction.NO_DIRECTION
+	var direction: Direction = Direction.NO_DIRECTION
 	
 	match door_name:
 		"DoorTop": 
