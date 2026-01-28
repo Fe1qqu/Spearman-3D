@@ -95,18 +95,31 @@ func add_spear_lenght(amount: int = 8) -> void:
 	spear.scale.x += amount / 100.0
 	hud.update_spear_length(spear.lenght)
 
-func pick_item(item_type: String) -> void:
+func pick_item(item_type: ItemType.Item) -> void:
 	match item_type:
-		"hearth":
+		ItemType.Item.HEART:
 			add_health()
-		"lightning":
+		ItemType.Item.LIGHTNING:
 			add_speed()
-		"stick_tape":
+		ItemType.Item.STICK_TAPE:
 			add_spear_lenght()
-		"dumbbell":
+		ItemType.Item.DUMBBELL:
 			add_damage()
 		_:
-			print("Unknown item type:", item_type)
+			push_error("[Spearman] Unknown item type: %s" % item_type)
 			return
 	
-	hud.add_item("res://textures/" + item_type + ".png")
+	hud.add_item(get_item_icon_path(item_type))
+
+func get_item_icon_path(item_type: ItemType.Item) -> String:
+	match item_type:
+		ItemType.Item.HEART:
+			return "res://textures/hearth.png"
+		ItemType.Item.LIGHTNING:
+			return "res://textures/lightning.png"
+		ItemType.Item.STICK_TAPE:
+			return "res://textures/stick_tape.png"
+		ItemType.Item.DUMBBELL:
+			return "res://textures/dumbbell.png"
+		_:
+			return ""

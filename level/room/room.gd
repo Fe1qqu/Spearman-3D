@@ -87,7 +87,7 @@ func move_spearman_to_door(from_door_direction: Direction) -> void:
 func spawn_boss() -> void:
 	var floor_config: FloorConfig = level_manager.level_config.floors[level_manager.current_floor]
 	
-	var boss_instance: Node3D = level_manager.scene_database.bosses[floor_config.boss_type].instantiate()
+	var boss_instance: Node3D = level_manager.scene_database.get_boss(floor_config.boss_type).instantiate()
 	boss_instance.position = Vector3(0.1, 0, 0)
 	boss_instance.spearman = spearman_instance
 	
@@ -135,7 +135,7 @@ func spawn_enemies() -> void:
 		var enemy_type: EnemyType.Enemy = room_config.enemy_types[i]
 		var enemy_position: Vector3 = room_config.enemy_positions[i]
 		
-		var enemy_instance: Node3D = level_manager.scene_database.enemies[enemy_type].instantiate()
+		var enemy_instance: Node3D = level_manager.scene_database.get_enemy(enemy_type).instantiate()
 		
 		enemy_instance.position = enemy_position
 		enemy_instance.spearman = spearman_instance
