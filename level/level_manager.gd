@@ -16,6 +16,10 @@ var visible_on_map_rooms: Array = [] # An array for storing visited rooms and th
 var current_room_position: Vector2 = Vector2(0, 0) # Current position on the map
 var room_instance: Node3D = null
 
+# -------------------- ENEMIES --------------------
+
+const ENEMY_Y: float = 0.0 # Default enemy height position (Y)
+
 var enemy_scenes: Array[PackedScene] = [
 	preload("res://characters/enemies/enemy1/enemy1.tscn"),
 	preload("res://characters/enemies/enemy2/enemy2.tscn"),
@@ -31,18 +35,72 @@ var boss_scenes: Array[PackedScene] = [
 
 var item_stand_scene: PackedScene = preload("res://items/item_stand.tscn")
 
-var enemy_layout: Array = [
-	[[0, 0], [0, 0, 1], [0, 0, 0]],      # Floor 1
-	[[1, 1], [1, 2], [0, 1, 1]],         # Floor 2
-	[[2, 2], [1, 1, 2], [0, 0, 0, 0]],   # Floor 3
-	[[0, 1, 2], [1, 2, 2], [1, 1, 1, 1]] # Floor 4
-]
+# ----------- ENEMY SPAWN CONFIGURATION -----------
 
-var enemy_positions_layout: Array = [
-	[[Vector3(8, 0, -8), Vector3(-8, 0, 8)], [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)], [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)]], # Floor 1
-	[[Vector3(2, 0, 2), Vector3(-2, 0, -2)], [Vector3(2, 0, 2), Vector3(-2, 0, -2)], [Vector3(0, 0, 0), Vector3(8, 0, -8), Vector3(-8, 0, 8)]], # Floor 2
-	[[Vector3(2, 0, 2), Vector3(-2, 0, -2)], [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)], [Vector3(8, 0, 8), Vector3(8, 0, -8), Vector3(-8, 0, 8), Vector3(-8, 0, -8)]], # Floor 3
-	[[Vector3(-2, 0, 0), Vector3(2, 0, 2), Vector3(2, 0, -2)], [Vector3(-2, 0, 0), Vector3(2, 0, 2), Vector3(2, 0, -2)], [Vector3(8, 0, 8), Vector3(8, 0, -8), Vector3(-8, 0, 8), Vector3(-8, 0, -8)]] # Floor 4
+var floors_enemy_data: Array = [
+	# -------- FLOOR 1 --------
+	[
+		{
+			"enemy_types": [0, 0],
+			"positions": [Vector3(8, 0, -8), Vector3(-8, 0, 8)]
+		},
+		{
+			"enemy_types": [0, 0, 1],
+			"positions": [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)]
+		},
+		{
+			"enemy_types": [0, 0, 0],
+			"positions": [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)]
+		}
+	],
+	
+	# -------- FLOOR 2 --------
+	[
+		{
+			"enemy_types": [1, 1],
+			"positions": [Vector3(2, 0, 2), Vector3(-2, 0, -2)]
+		},
+		{
+			"enemy_types": [1, 2],
+			"positions": [Vector3(2, 0, 2), Vector3(-2, 0, -2)]
+		},
+		{
+			"enemy_types": [0, 1, 1],
+			"positions": [Vector3(0, 0, 0), Vector3(8, 0, -8), Vector3(-8, 0, 8)]
+		}
+	],
+	
+	# -------- FLOOR 3 --------
+	[
+		{
+			"enemy_types": [2, 2],
+			"positions": [Vector3(2, 0, 2), Vector3(-2, 0, -2)]
+		},
+		{
+			"enemy_types": [1, 1, 2],
+			"positions": [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)]
+		},
+		{
+			"enemy_types": [0, 0, 0, 0],
+			"positions": [Vector3(8, 0, 8), Vector3(8, 0, -8), Vector3(-8, 0, 8), Vector3(-8, 0, -8)]
+		}
+	],
+	
+	# -------- FLOOR 4 --------
+	[
+		{
+			"enemy_types": [0, 1, 2],
+			"positions": [Vector3(-2, 0, 0), Vector3(2, 0, 2), Vector3(2, 0, -2)]
+		},
+		{
+			"enemy_types": [1, 2, 2],
+			"positions": [Vector3(-2, 0, 0), Vector3(2, 0, 2), Vector3(2, 0, -2)]
+		},
+		{
+			"enemy_types": [1, 1, 1, 1],
+			"positions": [Vector3(8, 0, 8), Vector3(8, 0, -8), Vector3(-8, 0, 8), Vector3(-8, 0, -8)]
+		}
+	]
 ]
 
 func _ready() -> void:

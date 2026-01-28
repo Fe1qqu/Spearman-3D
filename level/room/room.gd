@@ -128,23 +128,23 @@ func clear_item_stand() -> void:
 func spawn_enemies() -> void:
 	var current_floor: int = level_manager.current_floor
 	
-	var enemy_set: Array = level_manager.enemy_layout[current_floor]
-	var position_set: Array = level_manager.enemy_positions_layout[current_floor]
+	var floor_data: Array = level_manager.floors_enemy_data[current_floor]
+	var room_data: Dictionary = floor_data.pick_random()
 	
-	var random_index: int = randi() % enemy_set.size()
-	var enemies_to_spawn: Array = enemy_set[random_index]
-	var positions_to_use: Array = position_set[random_index]
+	var enemy_types: Array = room_data["enemy_types"]
+	var positions: Array = room_data["positions"]
 	
-	count_enemies = enemies_to_spawn.size()
+	count_enemies = enemy_types.size()
 	
 	for i in range(count_enemies):
-		var enemy_type_index: int = enemies_to_spawn[i]
+		var enemy_type_index: int = enemy_types[i]
+		var enemy_position: Vector3 = positions[i]
+		
 		var enemy_instance: Node3D = level_manager.enemy_scenes[enemy_type_index].instantiate()
-		enemy_instance.position = positions_to_use[i]
+		enemy_instance.position = enemy_position
 		enemy_instance.spearman = spearman_instance
 		
 		enemy_instance.connect("tree_exited", self._on_enemy_died)
-		
 		add_child(enemy_instance)
 
 func _on_enemy_died() -> void:
