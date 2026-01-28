@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FloorConfig" format=3 uid="uid://dm3tksnjkvmlb"]
+
+[ext_resource type="Script" uid="uid://tut621kxbhv6" path="res://data/rooms/room_сonfig.gd" id="1_jrt20"]
+[ext_resource type="Script" uid="uid://0pbd12ta8i2y" path="res://data/floors/floor_config.gd" id="2_5c4wj"]
+[ext_resource type="Resource" uid="uid://bmd6jlwn883lu" path="res://data/rooms/room_2_1.tres" id="2_uytrg"]
+[ext_resource type="Resource" uid="uid://c8qm0757or1mp" path="res://data/rooms/room_2_2.tres" id="3_dubx5"]
+[ext_resource type="Resource" uid="uid://ba5jrgaa208dh" path="res://data/rooms/room_2_3.tres" id="4_e3311"]
+
+[resource]
+script = ExtResource("2_5c4wj")
+room_config = Array[ExtResource("1_jrt20")]([ExtResource("2_uytrg"), ExtResource("3_dubx5"), ExtResource("4_e3311")])
+boss_type = 1
+metadata/_custom_type_script = "uid://0pbd12ta8i2y"

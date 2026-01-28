@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="SceneDatabase" format=3 uid="uid://crnjk0gfa2y3k"]
+
+[ext_resource type="Script" uid="uid://0hp6fq8ia1ad" path="res://data/scene_database/scene_database.gd" id="1_hwggd"]
+[ext_resource type="PackedScene" uid="uid://c85nsy4yyc2gq" path="res://characters/enemies/boss_zombie/boss_zombie.tscn" id="1_q8hr0"]
+[ext_resource type="PackedScene" uid="uid://cnh0iim0mlwtq" path="res://characters/enemies/boss_knight/boss_knight.tscn" id="2_rfwt1"]
+[ext_resource type="PackedScene" uid="uid://cfxy0l3fn04q4" path="res://characters/enemies/boss_ninja/boss_ninja.tscn" id="3_ajqg2"]
+[ext_resource type="PackedScene" uid="uid://cisgeqdnqsmqq" path="res://characters/enemies/boss_demon/boss_demon.tscn" id="4_ni1h6"]
+[ext_resource type="PackedScene" uid="uid://cbfx3d87mg4ar" path="res://characters/enemies/enemy_knight/enemy_knight.tscn" id="5_dfnxw"]
+[ext_resource type="PackedScene" uid="uid://lvcf67ge2aax" path="res://characters/enemies/enemy_ninja/enemy_ninja.tscn" id="6_ugjbh"]
+[ext_resource type="PackedScene" uid="uid://d132irdd8k1eu" path="res://characters/enemies/enemy_zombie/enemy_zombie.tscn" id="7_gi2j3"]
+[ext_resource type="PackedScene" uid="uid://b0umljdsldnex" path="res://items/dumbbell.glb" id="8_gjemw"]
+[ext_resource type="PackedScene" uid="uid://i56drqqk5dw6" path="res://items/hearth.glb" id="9_bk0tv"]
+[ext_resource type="PackedScene" uid="uid://bhboygbob5eal" path="res://items/lightning.glb" id="10_addwk"]
+[ext_resource type="PackedScene" uid="uid://c5jcbpbjs7bem" path="res://items/stick_tape.glb" id="11_gd4yc"]
+
+[resource]
+script = ExtResource("1_hwggd")
+enemies = Dictionary[int, PackedScene]({
+0: ExtResource("7_gi2j3"),
+1: ExtResource("5_dfnxw"),
+2: ExtResource("6_ugjbh")
+})
+bosses = Dictionary[int, PackedScene]({
+0: ExtResource("1_q8hr0"),
+1: ExtResource("2_rfwt1"),
+2: ExtResource("3_ajqg2"),
+3: ExtResource("4_ni1h6")
+})
+items = Dictionary[int, PackedScene]({
+0: ExtResource("8_gjemw"),
+1: ExtResource("9_bk0tv"),
+2: ExtResource("10_addwk"),
+3: ExtResource("11_gd4yc")
+})
+metadata/_custom_type_script = "uid://0hp6fq8ia1ad"

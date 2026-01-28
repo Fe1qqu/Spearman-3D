@@ -3,6 +3,7 @@ extends OmniLight3D
 @export var noise: NoiseTexture3D
 var time_passed: float = 0.0
 
+
 func _process(delta: float) -> void:
 	time_passed += delta
 	

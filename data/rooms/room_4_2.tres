@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RoomConfig" format=3 uid="uid://cyvmj0f1g35it"]
+
+[ext_resource type="Script" uid="uid://tut621kxbhv6" path="res://data/rooms/room_сonfig.gd" id="1_h3x5l"]
+
+[resource]
+script = ExtResource("1_h3x5l")
+enemy_types = Array[int]([1, 2, 2])
+enemy_positions = Array[Vector3]([Vector3(-2, 0, 0), Vector3(2, 0, 2), Vector3(2, 0, -2)])
+metadata/_custom_type_script = "uid://tut621kxbhv6"

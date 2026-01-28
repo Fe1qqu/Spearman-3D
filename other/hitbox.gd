@@ -5,6 +5,7 @@ extends Area3D
 
 signal hit_target(target: Node)
 
+
 func _ready() -> void:
 	# Prevent "UNUSED_SIGNAL" warning (signal is emitted externally from HurtBox)
 	if false:

@@ -3,8 +3,7 @@ extends Node3D
 
 signal room_changed(new_position, visible_map)
 
-var current_stage: int = 0 # Current floor
-const MAX_STAGE: int = 4
+var current_floor: int = 0 # Current floor
 const MAP_SIZE: int = 6 # Map size (6x6 rooms)
 
 const ROOM_SCENE: PackedScene = preload("res://level/room/room.tscn")
@@ -16,38 +15,24 @@ var visible_on_map_rooms: Array = [] # An array for storing visited rooms and th
 var current_room_position: Vector2 = Vector2(0, 0) # Current position on the map
 var room_instance: Node3D = null
 
-var enemy_scenes: Array[PackedScene] = [
-	preload("res://characters/enemies/enemy1/enemy1.tscn"),
-	preload("res://characters/enemies/enemy2/enemy2.tscn"),
-	preload("res://characters/enemies/enemy3/enemy3.tscn")
-]
-
-var boss_scenes: Array[PackedScene] = [
-	preload("res://characters/enemies/enemy4/enemy4.tscn"),
-	preload("res://characters/enemies/enemy5/enemy5.tscn"),
-	preload("res://characters/enemies/enemy6/enemy6.tscn"),
-	preload("res://characters/enemies/enemy7/enemy7.tscn")
-]
-
 var item_stand_scene: PackedScene = preload("res://items/item_stand.tscn")
 
-var enemy_layout: Array = [
-	[[0, 0], [0, 0, 1], [0, 0, 0]],      # Floor 1
-	[[1, 1], [1, 2], [0, 1, 1]],         # Floor 2
-	[[2, 2], [1, 1, 2], [0, 0, 0, 0]],   # Floor 3
-	[[0, 1, 2], [1, 2, 2], [1, 1, 1, 1]] # Floor 4
-]
+@export var level_config: LevelConfig
+@export var scene_database: SceneDatabase
 
-var enemy_positions_layout: Array = [
-	[[Vector3(8, 0, -8), Vector3(-8, 0, 8)], [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)], [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)]], # Floor 1
-	[[Vector3(2, 0, 2), Vector3(-2, 0, -2)], [Vector3(2, 0, 2), Vector3(-2, 0, -2)], [Vector3(0, 0, 0), Vector3(8, 0, -8), Vector3(-8, 0, 8)]], # Floor 2
-	[[Vector3(2, 0, 2), Vector3(-2, 0, -2)], [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)], [Vector3(8, 0, 8), Vector3(8, 0, -8), Vector3(-8, 0, 8), Vector3(-8, 0, -8)]], # Floor 3
-	[[Vector3(-2, 0, 0), Vector3(2, 0, 2), Vector3(2, 0, -2)], [Vector3(-2, 0, 0), Vector3(2, 0, 2), Vector3(2, 0, -2)], [Vector3(8, 0, 8), Vector3(8, 0, -8), Vector3(-8, 0, 8), Vector3(-8, 0, -8)]] # Floor 4
-]
 
 func _ready() -> void:
+	if level_config == null:
+		push_error("[LevelManager] level_config is not assigned.")
+		return
+	
+	if scene_database == null:
+		push_error("[LevelManager] scene_database is not assigned.")
+		return
+	
 	generate_level()
 	load_room(Direction.NO_DIRECTION)
+
 
 func generate_level() -> void:
 	map = []
@@ -88,6 +73,7 @@ func generate_level() -> void:
 	connect_rooms(start_x, start_y, boss_x, boss_y)
 	connect_rooms(start_x, start_y, item_x, item_y)
 
+
 func connect_rooms(x1: int, y1: int, x2: int, y2: int) -> void:
 	var target_room_type: Room = map[x2][y2]
 	
@@ -102,6 +88,7 @@ func connect_rooms(x1: int, y1: int, x2: int, y2: int) -> void:
 	
 	map[x2][y2] = target_room_type
 
+
 func load_room(direction: Direction) -> void:
 	if not room_instance:
 		room_instance = ROOM_SCENE.instantiate()
@@ -113,6 +100,7 @@ func load_room(direction: Direction) -> void:
 	room_instance.set_room_type(room_type, direction)
 	
 	emit_signal("room_changed", current_room_position, visible_on_map_rooms)
+
 
 func update_doors_visibility(room_position: Vector2) -> void:
 	var neighbors: Array[Vector2] = [
@@ -131,8 +119,10 @@ func update_doors_visibility(room_position: Vector2) -> void:
 		else:
 			room_instance.hide_door(i)
 
+
 func is_valid_position(room_position: Vector2) -> bool:
 	return room_position.x >= 0 and room_position.x < MAP_SIZE and room_position.y >= 0 and room_position.y < MAP_SIZE
+
 
 func move_to_room(direction: Direction) -> void:
 	var new_position: Vector2 = current_room_position
@@ -153,14 +143,16 @@ func move_to_room(direction: Direction) -> void:
 		current_room_position = new_position
 		load_room(direction)
 
-func go_to_next_stage() -> void:
-	current_stage += 1
+
+func go_to_next_floor() -> void:
+	current_floor += 1
 	
-	if current_stage == MAX_STAGE:
+	if current_floor >= level_config.get_floor_count():
 		game_won()
 	
 	generate_level()
 	load_room(Direction.NO_DIRECTION)
- 
+
+
 func game_won() -> void:
 	get_tree().call_deferred("change_scene_to_file", "res://other/game_won.tscn")
