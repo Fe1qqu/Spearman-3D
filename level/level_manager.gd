@@ -3,8 +3,8 @@ extends Node3D
 
 signal room_changed(new_position, visible_map)
 
-var current_stage: int = 0 # Current floor
-const MAX_STAGE: int = 4
+var current_floor: int = 0 # Current floor
+const MAX_FLOOR: int = 4
 const MAP_SIZE: int = 6 # Map size (6x6 rooms)
 
 const ROOM_SCENE: PackedScene = preload("res://level/room/room.tscn")
@@ -153,10 +153,10 @@ func move_to_room(direction: Direction) -> void:
 		current_room_position = new_position
 		load_room(direction)
 
-func go_to_next_stage() -> void:
-	current_stage += 1
+func go_to_next_floor() -> void:
+	current_floor += 1
 	
-	if current_stage == MAX_STAGE:
+	if current_floor == MAX_FLOOR:
 		game_won()
 	
 	generate_level()

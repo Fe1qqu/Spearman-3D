@@ -85,8 +85,8 @@ func move_spearman_to_door(from_door_direction: Direction) -> void:
 		spearman_instance.position = spearman_positions[from_door_direction]
 
 func spawn_boss() -> void:
-	var current_stage: int = level_manager.current_stage
-	var boss_instance: Node3D = level_manager.boss_scenes[current_stage].instantiate()
+	var current_floor: int = level_manager.current_floor
+	var boss_instance: Node3D = level_manager.boss_scenes[current_floor].instantiate()
 	boss_instance.position = Vector3(0.1, 0, 0)
 	boss_instance.spearman = spearman_instance
 	
@@ -126,10 +126,10 @@ func clear_item_stand() -> void:
 		current_item_stand = null
 
 func spawn_enemies() -> void:
-	var current_stage: int = level_manager.current_stage
+	var current_floor: int = level_manager.current_floor
 	
-	var enemy_set: Array = level_manager.enemy_layout[current_stage]
-	var position_set: Array = level_manager.enemy_positions_layout[current_stage]
+	var enemy_set: Array = level_manager.enemy_layout[current_floor]
+	var position_set: Array = level_manager.enemy_positions_layout[current_floor]
 	
 	var random_index: int = randi() % enemy_set.size()
 	var enemies_to_spawn: Array = enemy_set[random_index]
@@ -171,7 +171,7 @@ func _on_door_area_body_entered(_body: Spearman, door_name: String) -> void:
 		"DoorBoss":
 			set_boss_door_state(false)
 			boss_door.visible = false
-			level_manager.go_to_next_stage()
+			level_manager.go_to_next_floor()
 			return
 	
 	level_manager.move_to_room(direction)
