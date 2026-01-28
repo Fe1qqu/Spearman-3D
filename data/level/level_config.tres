@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LevelConfig" format=3 uid="uid://quk2r3jlyscj"]
+
+[ext_resource type="Script" uid="uid://0pbd12ta8i2y" path="res://data/floors/floor_config.gd" id="1_2sinj"]
+[ext_resource type="Script" uid="uid://bjvq2r2p144ye" path="res://data/level/level_config.gd" id="2_6vs6u"]
+[ext_resource type="Resource" uid="uid://8ofn0lm2cmqj" path="res://data/floors/floor_1.tres" id="2_msvyl"]
+[ext_resource type="Resource" uid="uid://dm3tksnjkvmlb" path="res://data/floors/floor_2.tres" id="3_1fw4l"]
+[ext_resource type="Resource" uid="uid://qvouobr0aer8" path="res://data/floors/floor_3.tres" id="4_yre1h"]
+[ext_resource type="Resource" uid="uid://c5q0ewopwdhdv" path="res://data/floors/floor_4.tres" id="5_l7s1a"]
+
+[resource]
+script = ExtResource("2_6vs6u")
+floors = Array[ExtResource("1_2sinj")]([ExtResource("2_msvyl"), ExtResource("3_1fw4l"), ExtResource("4_yre1h"), ExtResource("5_l7s1a")])
+metadata/_custom_type_script = "uid://bjvq2r2p144ye"

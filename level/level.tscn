@@ -1,14 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://btlserpolr4kt"]
+[gd_scene format=3 uid="uid://btlserpolr4kt"]
 
 [ext_resource type="Script" uid="uid://cakuepn5gbcxd" path="res://level/level_manager.gd" id="1_782cr"]
 [ext_resource type="PackedScene" uid="uid://20xw1dutr6ad" path="res://other/pause_menu.tscn" id="2_hloey"]
+[ext_resource type="Resource" uid="uid://crnjk0gfa2y3k" path="res://data/scene_database/scene_database.tres" id="3_vkbyq"]
+[ext_resource type="Resource" uid="uid://quk2r3jlyscj" path="res://data/level/level_config.tres" id="4_ktfr2"]
 
-[node name="Level" type="Node3D"]
+[node name="Level" type="Node3D" unique_id=1334421099]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=388015882]
 
-[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("2_hloey")]
+[node name="PauseMenu" parent="CanvasLayer" unique_id=857495507 instance=ExtResource("2_hloey")]
 visible = false
 
-[node name="LevelManager" type="Node3D" parent="."]
+[node name="LevelManager" type="Node3D" parent="." unique_id=1440433794]
 script = ExtResource("1_782cr")
+level_config = ExtResource("4_ktfr2")
+scene_database = ExtResource("3_vkbyq")

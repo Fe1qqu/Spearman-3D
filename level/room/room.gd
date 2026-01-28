@@ -85,15 +85,15 @@ func move_spearman_to_door(from_door_direction: Direction) -> void:
 		spearman_instance.position = spearman_positions[from_door_direction]
 
 func spawn_boss() -> void:
-	var current_floor: int = level_manager.current_floor
-	var boss_instance: Node3D = level_manager.boss_scenes[current_floor].instantiate()
+	var floor_config: FloorConfig = level_manager.level_config.floors[level_manager.current_floor]
+	
+	var boss_instance: Node3D = level_manager.scene_database.bosses[floor_config.boss_type].instantiate()
 	boss_instance.position = Vector3(0.1, 0, 0)
 	boss_instance.spearman = spearman_instance
 	
 	boss_instance.connect("tree_exited", self._on_boss_died)
 	
 	add_child(boss_instance)
-	
 	set_boss_door_state(false)
 
 func _on_boss_died() -> void:
@@ -126,24 +126,19 @@ func clear_item_stand() -> void:
 		current_item_stand = null
 
 func spawn_enemies() -> void:
-	var current_floor: int = level_manager.current_floor
+	var floor_config: FloorConfig = level_manager.level_config.floors[level_manager.current_floor]
+	var room_config: RoomConfig = floor_config.get_random_room_config()
 	
-	var floor_data: Array = level_manager.floors_enemy_data[current_floor]
-	var room_data: Dictionary = floor_data.pick_random()
-	
-	var enemy_types: Array = room_data["enemy_types"]
-	var positions: Array = room_data["positions"]
-	
-	count_enemies = enemy_types.size()
+	count_enemies = room_config.get_enemies_count()
 	
 	for i in range(count_enemies):
-		var enemy_type_index: int = enemy_types[i]
-		var enemy_position: Vector3 = positions[i]
+		var enemy_type: EnemyType.Enemy = room_config.enemy_types[i]
+		var enemy_position: Vector3 = room_config.enemy_positions[i]
 		
-		var enemy_instance: Node3D = level_manager.enemy_scenes[enemy_type_index].instantiate()
+		var enemy_instance: Node3D = level_manager.scene_database.enemies[enemy_type].instantiate()
+		
 		enemy_instance.position = enemy_position
 		enemy_instance.spearman = spearman_instance
-		
 		enemy_instance.connect("tree_exited", self._on_enemy_died)
 		add_child(enemy_instance)
 

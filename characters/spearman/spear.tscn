@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cq21cvvwewgn7"]
+[gd_scene format=3 uid="uid://cq21cvvwewgn7"]
 
 [ext_resource type="PackedScene" uid="uid://di5a0c7vlv4et" path="res://characters/spearman/spear.glb" id="1_0ureu"]
 [ext_resource type="Script" uid="uid://c3c2qwucdkq4t" path="res://characters/spearman/spear.gd" id="2_ss4yw"]
@@ -93,27 +93,25 @@ _data = {
 &"attack": SubResource("Animation_5hbfd")
 }
 
-[node name="Spear" instance=ExtResource("1_0ureu")]
+[node name="Spear" unique_id=1313166418 instance=ExtResource("1_0ureu")]
 script = ExtResource("2_ss4yw")
 
 [node name="Stick" parent="." index="0"]
 transform = Transform3D(-9.87698e-10, -0.0225959, 0, 0.0225959, -9.87698e-10, 0, 0, 0, 0.0225959, -0.0210708, 0.687783, -0.313712)
 
-[node name="Hitbox" parent="tip" index="0" instance=ExtResource("3_wo4qe")]
+[node name="Hitbox" parent="tip" index="0" unique_id=407516498 instance=ExtResource("3_wo4qe")]
 
 [node name="CollisionShape3D" parent="tip/Hitbox" index="0"]
 transform = Transform3D(5.27979, 0, 0, 0, 5.27979, 0, 0, 0, 5.27979, 1.02877, 57.9599, 0)
 shape = SubResource("CapsuleShape3D_t1hjl")
 disabled = true
 
-[node name="AttackAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="2"]
+[node name="AttackAudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="2" unique_id=1507608383]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3307314, 0.71103406, -0.31371197)
 stream = ExtResource("4_3fplm")
 volume_db = -16.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
-libraries = {
-&"": SubResource("AnimationLibrary_gt7b5")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3" unique_id=166280466]
+libraries/ = SubResource("AnimationLibrary_gt7b5")
 
 [editable path="tip/Hitbox"]

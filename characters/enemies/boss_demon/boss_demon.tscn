@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cisgeqdnqsmqq"]
+
+[ext_resource type="PackedScene" uid="uid://bbrj2x2m4wrvb" path="res://characters/enemies/enemy.tscn" id="1_6slc2"]
+[ext_resource type="Script" uid="uid://4gkxubetvan0" path="res://characters/enemies/boss_demon/boss_demon.gd" id="2_pgjwg"]
+[ext_resource type="PackedScene" uid="uid://kdmfs2bo07h4" path="res://projectiles/fireball.tscn" id="3_grrxs"]
+[ext_resource type="PackedScene" uid="uid://dbflf8xo2j5qt" path="res://characters/enemies/boss_demon/boss_demon.glb" id="4_vyver"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_pbfxl"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
+[node name="Enemy7" unique_id=506330948 instance=ExtResource("1_6slc2")]
+script = ExtResource("2_pgjwg")
+fireball_scene = ExtResource("3_grrxs")
+fireball_delay = 5.0
+speed = 9.0
+health = 1000
+
+[node name="Mesh" parent="." index="0" unique_id=51417496 instance=ExtResource("4_vyver")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Sprite3D" parent="." index="5"]
+texture = SubResource("ViewportTexture_pbfxl")
+
+[editable path="Hitbox"]
+[editable path="HurtBox"]

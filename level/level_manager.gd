@@ -4,7 +4,6 @@ extends Node3D
 signal room_changed(new_position, visible_map)
 
 var current_floor: int = 0 # Current floor
-const MAX_FLOOR: int = 4
 const MAP_SIZE: int = 6 # Map size (6x6 rooms)
 
 const ROOM_SCENE: PackedScene = preload("res://level/room/room.tscn")
@@ -16,94 +15,20 @@ var visible_on_map_rooms: Array = [] # An array for storing visited rooms and th
 var current_room_position: Vector2 = Vector2(0, 0) # Current position on the map
 var room_instance: Node3D = null
 
-# -------------------- ENEMIES --------------------
-
-const ENEMY_Y: float = 0.0 # Default enemy height position (Y)
-
-var enemy_scenes: Array[PackedScene] = [
-	preload("res://characters/enemies/enemy1/enemy1.tscn"),
-	preload("res://characters/enemies/enemy2/enemy2.tscn"),
-	preload("res://characters/enemies/enemy3/enemy3.tscn")
-]
-
-var boss_scenes: Array[PackedScene] = [
-	preload("res://characters/enemies/enemy4/enemy4.tscn"),
-	preload("res://characters/enemies/enemy5/enemy5.tscn"),
-	preload("res://characters/enemies/enemy6/enemy6.tscn"),
-	preload("res://characters/enemies/enemy7/enemy7.tscn")
-]
-
 var item_stand_scene: PackedScene = preload("res://items/item_stand.tscn")
 
-# ----------- ENEMY SPAWN CONFIGURATION -----------
-
-var floors_enemy_data: Array = [
-	# -------- FLOOR 1 --------
-	[
-		{
-			"enemy_types": [0, 0],
-			"positions": [Vector3(8, 0, -8), Vector3(-8, 0, 8)]
-		},
-		{
-			"enemy_types": [0, 0, 1],
-			"positions": [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)]
-		},
-		{
-			"enemy_types": [0, 0, 0],
-			"positions": [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)]
-		}
-	],
-	
-	# -------- FLOOR 2 --------
-	[
-		{
-			"enemy_types": [1, 1],
-			"positions": [Vector3(2, 0, 2), Vector3(-2, 0, -2)]
-		},
-		{
-			"enemy_types": [1, 2],
-			"positions": [Vector3(2, 0, 2), Vector3(-2, 0, -2)]
-		},
-		{
-			"enemy_types": [0, 1, 1],
-			"positions": [Vector3(0, 0, 0), Vector3(8, 0, -8), Vector3(-8, 0, 8)]
-		}
-	],
-	
-	# -------- FLOOR 3 --------
-	[
-		{
-			"enemy_types": [2, 2],
-			"positions": [Vector3(2, 0, 2), Vector3(-2, 0, -2)]
-		},
-		{
-			"enemy_types": [1, 1, 2],
-			"positions": [Vector3(-1, 0, 0), Vector3(1, 0, 1), Vector3(1, 0, -1)]
-		},
-		{
-			"enemy_types": [0, 0, 0, 0],
-			"positions": [Vector3(8, 0, 8), Vector3(8, 0, -8), Vector3(-8, 0, 8), Vector3(-8, 0, -8)]
-		}
-	],
-	
-	# -------- FLOOR 4 --------
-	[
-		{
-			"enemy_types": [0, 1, 2],
-			"positions": [Vector3(-2, 0, 0), Vector3(2, 0, 2), Vector3(2, 0, -2)]
-		},
-		{
-			"enemy_types": [1, 2, 2],
-			"positions": [Vector3(-2, 0, 0), Vector3(2, 0, 2), Vector3(2, 0, -2)]
-		},
-		{
-			"enemy_types": [1, 1, 1, 1],
-			"positions": [Vector3(8, 0, 8), Vector3(8, 0, -8), Vector3(-8, 0, 8), Vector3(-8, 0, -8)]
-		}
-	]
-]
+@export var level_config: LevelConfig
+@export var scene_database: SceneDatabase
 
 func _ready() -> void:
+	if level_config == null:
+		push_error("[LevelManager] level_config is not assigned.")
+		return
+	
+	if scene_database == null:
+		push_error("[LevelManager] scene_database is not assigned.")
+		return
+	
 	generate_level()
 	load_room(Direction.NO_DIRECTION)
 
@@ -214,7 +139,7 @@ func move_to_room(direction: Direction) -> void:
 func go_to_next_floor() -> void:
 	current_floor += 1
 	
-	if current_floor == MAX_FLOOR:
+	if current_floor >= level_config.get_floor_count():
 		game_won()
 	
 	generate_level()

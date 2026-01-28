@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="FloorConfig" format=3 uid="uid://8ofn0lm2cmqj"]
+
+[ext_resource type="Script" uid="uid://tut621kxbhv6" path="res://data/rooms/room_сonfig.gd" id="1_t03se"]
+[ext_resource type="Script" uid="uid://0pbd12ta8i2y" path="res://data/floors/floor_config.gd" id="2_6ufqu"]
+[ext_resource type="Resource" uid="uid://xkmxphupxnlu" path="res://data/rooms/room_1_1.tres" id="2_fcri6"]
+[ext_resource type="Resource" uid="uid://rxfbwhdheggf" path="res://data/rooms/room_1_2.tres" id="3_wd43w"]
+[ext_resource type="Resource" uid="uid://b1jmx0tkw0a20" path="res://data/rooms/room_1_3.tres" id="4_jcwku"]
+
+[resource]
+script = ExtResource("2_6ufqu")
+room_config = Array[ExtResource("1_t03se")]([ExtResource("2_fcri6"), ExtResource("3_wd43w"), ExtResource("4_jcwku")])
+metadata/_custom_type_script = "uid://0pbd12ta8i2y"
