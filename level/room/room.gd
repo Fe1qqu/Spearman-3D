@@ -27,6 +27,7 @@ var count_enemies: int
 
 var current_item_stand: Node = null
 
+
 func set_room_type(room_type: Room, from_door_direction: Direction) -> void:
 	if not spearman_instance:
 		spearman_instance = spearman.instantiate()
@@ -49,11 +50,14 @@ func set_room_type(room_type: Room, from_door_direction: Direction) -> void:
 		Room.CLEARED:
 			open_all_doors()
 
+
 func show_door(index) -> void:
 	doors[index].visible = true
 
+
 func hide_door(index) -> void:
 	doors[index].visible = false
+
 
 func set_door_state(index: int, is_open: bool) -> void:
 	var door: Sprite3D = doors[index]
@@ -66,15 +70,18 @@ func set_door_state(index: int, is_open: bool) -> void:
 		door.texture = load("res://textures/door_closed.png")
 		collision_shape.set_deferred("disabled", true)
 
+
 func close_all_doors() -> void:
 	for i in range(doors.size()):
 		if doors[i].visible:
 			set_door_state(i, false)
 
+
 func open_all_doors() -> void:
 	for i in range(doors.size()):
 		if doors[i].visible:
 			set_door_state(i, true)
+
 
 func move_spearman_to_door(from_door_direction: Direction) -> void:
 	if from_door_direction == Direction.NO_DIRECTION:
@@ -83,6 +90,7 @@ func move_spearman_to_door(from_door_direction: Direction) -> void:
 	else:
 		# If came through the door, place the Spearman next to the door
 		spearman_instance.position = spearman_positions[from_door_direction]
+
 
 func spawn_boss() -> void:
 	var floor_config: FloorConfig = level_manager.level_config.floors[level_manager.current_floor]
@@ -96,8 +104,10 @@ func spawn_boss() -> void:
 	add_child(boss_instance)
 	set_boss_door_state(false)
 
+
 func _on_boss_died() -> void:
 	set_boss_door_state(true)
+
 
 func set_boss_door_state(is_open: bool) -> void:
 	var collision_shape: CollisionShape3D = boss_door.get_node("Area3D").get_node("CollisionShape3D")
@@ -111,6 +121,7 @@ func set_boss_door_state(is_open: bool) -> void:
 	
 	boss_door.visible = true
 
+
 func spawn_item() -> void:
 	var item_stand_instance: Node3D = level_manager.item_stand_scene.instantiate()
 	current_item_stand = item_stand_instance
@@ -120,10 +131,12 @@ func spawn_item() -> void:
 	
 	add_child(item_stand_instance)
 
+
 func clear_item_stand() -> void:
 	if current_item_stand:
 		current_item_stand.queue_free()
 		current_item_stand = null
+
 
 func spawn_enemies() -> void:
 	var floor_config: FloorConfig = level_manager.level_config.floors[level_manager.current_floor]
@@ -142,12 +155,14 @@ func spawn_enemies() -> void:
 		enemy_instance.connect("tree_exited", self._on_enemy_died)
 		add_child(enemy_instance)
 
+
 func _on_enemy_died() -> void:
 	count_enemies -= 1
 	if count_enemies == 0:
 		open_all_doors()
 		var position_on_map: Vector2 = level_manager.current_room_position
 		level_manager.map[position_on_map.x][position_on_map.y] = Room.CLEARED
+
 
 func _on_door_area_body_entered(_body: Spearman, door_name: String) -> void:
 	clear_item_stand()

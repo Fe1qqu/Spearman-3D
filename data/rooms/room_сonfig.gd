@@ -4,6 +4,7 @@ extends Resource
 @export var enemy_types: Array[EnemyType.Enemy]
 @export var enemy_positions: Array[Vector3]
 
+
 func get_enemies_count() -> int:
 	if enemy_types == null or enemy_positions == null:
 		push_error("[RoomConfig] enemy_types or enemy_positions is not set.")

@@ -20,12 +20,14 @@ const MAX_VERTICAL_ANGLE: float = PI / 2.2
 @onready var hud: Control = $Hud
 @onready var take_damage_audio_stream_player: AudioStreamPlayer3D = $TakeDamageAudioStreamPlayer3D
 
+
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	hud.update_health(health)
 	hud.update_speed(speed)
 	hud.update_damage(spear.damage)
 	hud.update_spear_length(spear.lenght)
+
 
 func _process(delta: float) -> void:
 	var stick_x: float = Input.get_action_strength("look_right") - Input.get_action_strength("look_left")
@@ -45,6 +47,7 @@ func _process(delta: float) -> void:
 	camera.rotation.x = clamp(camera.rotation.x, -MAX_VERTICAL_ANGLE, MAX_VERTICAL_ANGLE)
 	rotation.y += current_rotation_x
 
+
 func _physics_process(delta: float) -> void:
 	var direction: Vector2 = Vector2(
 		Input.get_action_strength("back") - Input.get_action_strength("forward"),
@@ -58,6 +61,7 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		input_rotation_x = -deg_to_rad(event.relative.x) * Settings.mouse_sensitivity
@@ -65,6 +69,7 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("attack"):
 		spear.call("attack")
+
 
 func take_damage(amount: int) -> void:
 	health = max(0, health - amount)
@@ -75,25 +80,31 @@ func take_damage(amount: int) -> void:
 	
 	hud.update_health(health)
 
+
 func game_over() -> void:
 	get_tree().call_deferred("change_scene_to_file", "res://other/game_over.tscn")
+
 
 func add_health(amount: int = 2) -> void:
 	health += amount
 	hud.update_health(health)
 
+
 func add_speed(amount: int = 2) -> void:
 	speed += amount
 	hud.update_speed(speed)
+
 
 func add_damage(amount: int = 4) -> void:
 	spear.call("set_damage", spear.damage + amount)
 	hud.update_damage(spear.damage)
 
+
 func add_spear_lenght(amount: int = 8) -> void:
 	spear.lenght += amount
 	spear.scale.x += amount / 100.0
 	hud.update_spear_length(spear.lenght)
+
 
 func pick_item(item_type: ItemType.Item) -> void:
 	match item_type:
@@ -110,6 +121,7 @@ func pick_item(item_type: ItemType.Item) -> void:
 			return
 	
 	hud.add_item(get_item_icon_path(item_type))
+
 
 func get_item_icon_path(item_type: ItemType.Item) -> String:
 	match item_type:

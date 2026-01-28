@@ -9,6 +9,7 @@ const EXPLOSION_SCENE: PackedScene = preload("res://vfx/Explosion/explosion.tscn
 
 @onready var audio_stream_player: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
+
 func _ready() -> void:
 	audio_stream_player.playing = true
 	
@@ -16,8 +17,10 @@ func _ready() -> void:
 	if is_inside_tree():
 		queue_free()
 
+
 func _physics_process(delta: float) -> void:
 	global_position += direction * speed * delta
+
 
 func set_direction(dir: Vector3) -> void:
 	direction = dir.normalized()
@@ -33,6 +36,7 @@ func _on_hitbox_body_entered(body: Node3D) -> void:
 	if body is StaticBody3D or body.is_in_group("environment"):
 		_spawn_explosion()
 		queue_free()
+
 
 func _spawn_explosion() -> void:
 	if EXPLOSION_SCENE == null:

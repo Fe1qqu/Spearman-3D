@@ -9,6 +9,7 @@ var damage_timer: Timer = Timer.new()
 var invulnerability_timer: Timer = Timer.new()
 var is_invulnerable: bool = false
 
+
 func _ready() -> void:
 	# Setting up a timer for the damage interval
 	damage_timer.wait_time = damage_interval
@@ -27,6 +28,7 @@ func _ready() -> void:
 	connect("area_entered", self._on_area_entered)
 	connect("area_exited", self._on_area_exited)
 
+
 func _on_area_entered(hitbox: HitBox) -> void:
 	if (hitbox.is_in_group("hitboxes") and not (owner.is_in_group("enemies") 
 		and hitbox.owner.is_in_group("enemies")) and owner.has_method("take_damage")):
@@ -35,13 +37,16 @@ func _on_area_entered(hitbox: HitBox) -> void:
 		if damage_timer.is_stopped():
 			damage_timer.start()
 
+
 func _on_area_exited(hitbox: HitBox) -> void:
 	if hitbox == hitbox_in_area:
 		hitbox_in_area = null
 		damage_timer.stop()
 
+
 func _deal_damage() -> void:
 	_try_deal_damage()
+
 
 func _try_deal_damage() -> void:
 	if not is_invulnerable and hitbox_in_area:
@@ -49,6 +54,7 @@ func _try_deal_damage() -> void:
 		hitbox_in_area.emit_signal("hit_target", owner)
 		is_invulnerable = true
 		invulnerability_timer.start()
+
 
 func _end_invulnerability() -> void:
 	is_invulnerable = false

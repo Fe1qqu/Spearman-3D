@@ -20,6 +20,7 @@ var item_stand_scene: PackedScene = preload("res://items/item_stand.tscn")
 @export var level_config: LevelConfig
 @export var scene_database: SceneDatabase
 
+
 func _ready() -> void:
 	if level_config == null:
 		push_error("[LevelManager] level_config is not assigned.")
@@ -31,6 +32,7 @@ func _ready() -> void:
 	
 	generate_level()
 	load_room(Direction.NO_DIRECTION)
+
 
 func generate_level() -> void:
 	map = []
@@ -71,6 +73,7 @@ func generate_level() -> void:
 	connect_rooms(start_x, start_y, boss_x, boss_y)
 	connect_rooms(start_x, start_y, item_x, item_y)
 
+
 func connect_rooms(x1: int, y1: int, x2: int, y2: int) -> void:
 	var target_room_type: Room = map[x2][y2]
 	
@@ -85,6 +88,7 @@ func connect_rooms(x1: int, y1: int, x2: int, y2: int) -> void:
 	
 	map[x2][y2] = target_room_type
 
+
 func load_room(direction: Direction) -> void:
 	if not room_instance:
 		room_instance = ROOM_SCENE.instantiate()
@@ -96,6 +100,7 @@ func load_room(direction: Direction) -> void:
 	room_instance.set_room_type(room_type, direction)
 	
 	emit_signal("room_changed", current_room_position, visible_on_map_rooms)
+
 
 func update_doors_visibility(room_position: Vector2) -> void:
 	var neighbors: Array[Vector2] = [
@@ -114,8 +119,10 @@ func update_doors_visibility(room_position: Vector2) -> void:
 		else:
 			room_instance.hide_door(i)
 
+
 func is_valid_position(room_position: Vector2) -> bool:
 	return room_position.x >= 0 and room_position.x < MAP_SIZE and room_position.y >= 0 and room_position.y < MAP_SIZE
+
 
 func move_to_room(direction: Direction) -> void:
 	var new_position: Vector2 = current_room_position
@@ -136,6 +143,7 @@ func move_to_room(direction: Direction) -> void:
 		current_room_position = new_position
 		load_room(direction)
 
+
 func go_to_next_floor() -> void:
 	current_floor += 1
 	
@@ -144,6 +152,7 @@ func go_to_next_floor() -> void:
 	
 	generate_level()
 	load_room(Direction.NO_DIRECTION)
- 
+
+
 func game_won() -> void:
 	get_tree().call_deferred("change_scene_to_file", "res://other/game_won.tscn")

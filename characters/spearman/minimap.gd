@@ -12,9 +12,11 @@ var current_room: Vector2 = Vector2(0, 0) # The player's current position
 
 @onready var level_manager: LevelManager = get_node("/root/Level/LevelManager")
 
+
 func _ready() -> void:
 	if level_manager:
 		level_manager.connect("room_changed", Callable(self, "_update_minimap"))
+
 
 func _draw() -> void:
 	var map_size: int = map.size()
@@ -53,6 +55,7 @@ func _draw() -> void:
 	var player_position: Vector2 = Vector2(current_room.y, current_room.x) * (ROOM_SIZE + ROOM_SPACING)
 	draw_rect(Rect2(player_position, ROOM_SIZE), Color("#505050"))
 	draw_rect(Rect2(player_position + Vector2(1, 1), ROOM_SIZE - Vector2(1, 1)), Color.BLACK, false, 1)
+
 
 func _update_minimap(current_room_position: Vector2, visible_on_map_rooms: Array) -> void:
 	map = visible_on_map_rooms

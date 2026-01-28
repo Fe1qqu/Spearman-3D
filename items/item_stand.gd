@@ -12,6 +12,7 @@ var current_item_type: ItemType.Item
 
 signal item_picked
 
+
 func _ready() -> void:
 	if scene_database == null:
 		push_error("[ItemStand] scene_database is not assigned.")
@@ -24,6 +25,7 @@ func _ready() -> void:
 	spawn_random_item()
 	animation_player.play("animation")
 
+
 func spawn_random_item() -> void:
 	current_item_type = available_items.pick_random()
 	
@@ -32,9 +34,11 @@ func spawn_random_item() -> void:
 	var item_instance: Node3D = scene_database.get_item(current_item_type).instantiate()
 	item.add_child(item_instance)
 
+
 func clear_item():
 	for child in item.get_children():
 		child.queue_free()
+
 
 func _on_spearman_entered(body: Spearman) -> void:
 	body.pick_item(current_item_type)
